@@ -4,4 +4,5 @@ Este repositório tem o objetivo de padronizar a criação dos modulos para terr
 
 ## GCP
 
-[VPC](gcp/vpc/README.md)
+- [VPC](gcp/vpc/README.md)
+- [Subnet](gcp/subnet/README.md)
