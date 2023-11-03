@@ -1,3 +1,3 @@
-# output "role" {
-#   value = google_project_iam_custom_role._
-# }
+output "id" {
+  value = google_project_iam_custom_role._.id
+}
