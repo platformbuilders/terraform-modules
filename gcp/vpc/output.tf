@@ -1,4 +1,4 @@
 output "id" {
-  description = "Created vpc"
+  description = "ID of created vpc"
   value       = google_compute_network._.id
 }
