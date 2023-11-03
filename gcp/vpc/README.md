@@ -22,6 +22,15 @@ Este modulo possui a o id da VPC criada como output e pode ser utilizada da segu
 module.vpc.id
 ```
 
+## Variáveis
+
+Para usar este modulo, você vai precisar passar as seguintes variáveis:
+
+`project_id`
+
+`name`
+
+
 ## Referência
 
  - [Terraform Google Provider](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_network)
