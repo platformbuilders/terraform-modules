@@ -47,3 +47,19 @@ resource "google_compute_instance" "_" {
 
   resource_policies = var.resource_policies
 }
+
+resource "google_compute_resource_policy" "shutdown-policy" {
+  count = var.schedule_shutdown ? 1 : 0
+
+  project     = var.project_id
+  name        = "${var.name}-shutdown-policy"
+  description = "Job para ligar e desligar a VM"
+
+
+  instance_schedule_policy {
+    vm_stop_schedule {
+      schedule = var.schedule_shutdown_cron
+    }
+    time_zone = var.schedule_shutdown_time_zone
+  }
+}

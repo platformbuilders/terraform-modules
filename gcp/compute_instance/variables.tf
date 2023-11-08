@@ -86,3 +86,21 @@ variable "external_access" {
   description = "Have external access"
   default     = false
 }
+
+variable "schedule_shutdown" {
+  type        = bool
+  description = "Have schedule for VM shutdown"
+  default     = false
+}
+
+variable "schedule_shutdown_cron" {
+  type        = string
+  description = "Cron time for VM shutdown"
+  default     = "0 20 * * *"
+}
+
+variable "schedule_shutdown_time_zone" {
+  type        = string
+  description = "Time zone of cron time"
+  default     = "America/Sao_Paulo"
+}
