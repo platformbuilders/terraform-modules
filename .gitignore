@@ -1,0 +1,28 @@
+# project #
+.terraform
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
+!bootstrap/bootstrap.tfstate
+builds/
+.terraform.lock.hcl
+
+# intellij #
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# eclipse #
+.settings/
+.project
+.classpath
+
+# vagrant #
+.vagrant
+
+# osx #
+.DS_Store
+
+# vs code #
+.vscode/
