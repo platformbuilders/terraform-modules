@@ -1,6 +1,7 @@
 resource "google_container_cluster" "_" {
   name     = var.cluster_name
   location = var.master_location
+  project = var.project_id
 
   min_master_version = var.min_master_version
   node_locations     = var.nodes_location
