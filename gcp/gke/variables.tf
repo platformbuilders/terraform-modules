@@ -12,7 +12,9 @@ variable "master_location" {
 }
 
 variable "min_master_version" {
+  type        = string
   description = "Master min version"
+  default     = ""
 }
 variable "nodes_location" {
   description = "Nodes Zones list"

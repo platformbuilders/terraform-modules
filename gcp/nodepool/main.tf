@@ -13,7 +13,6 @@ resource "google_container_node_pool" "_" {
   autoscaling {
     min_node_count = var.min_node_count
     max_node_count = var.max_node_count
-
   }
 
   management {
