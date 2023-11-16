@@ -22,3 +22,18 @@ variable "tier" {
   type        = string
   description = "Environment tier"
 }
+
+variable "kms_key" {
+  type        = string
+  description = "KMS key"
+}
+
+variable "dataset_owners" {
+  type = list(string)
+  # Exemplo: ["user:joao.assis@platformbuilders.io", "group:security-group@platformbuilders.io"]
+}
+
+variable "dataset_readers" {
+  type = list(string)
+  # Exemplo: ["user:joao.assis@platformbuilders.io", "group:security-group@platformbuilders.io"]
+}
