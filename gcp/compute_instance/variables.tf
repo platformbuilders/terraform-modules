@@ -19,6 +19,11 @@ variable "name" {
   description = "Instance name"
 }
 
+variable "kms_key_self_link" {
+  type        = string
+  description = "kms key reference"
+}
+
 variable "network" {
   type        = string
   description = "VPC"

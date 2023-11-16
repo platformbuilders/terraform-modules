@@ -16,6 +16,9 @@ resource "google_compute_instance" "_" {
       image = var.image
       size  = var.disk_size
     }
+    disk_encryption_key_raw  = {
+      kms_key_self_link = var.kms_key_self_link 
+      }
   }
 
   allow_stopping_for_update = true
