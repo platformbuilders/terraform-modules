@@ -36,6 +36,7 @@ variable "pods_cidr" {
 
 variable "master_authorized_networks_config" {
   description = "Master authorized networks config"
+  type        = list(string)
 }
 
 variable "services_cidr" {
@@ -50,8 +51,19 @@ variable "subnet_id" {
   description = "Subnet id"
 }
 
-
 variable "labels" {
   description = "Resource labels"
   type        = map(string)
+}
+
+variable "is_public" {
+  description = "Cluster is Public?"
+  type        = bool
+  default     = false
+}
+
+variable "deletion_protection" {
+  description = "Whether or not to allow Terraform to destroy the cluster. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply that would delete the cluster will fail."
+  type        = bool
+  default     = true
 }

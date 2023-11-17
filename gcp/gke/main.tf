@@ -1,10 +1,11 @@
 resource "google_container_cluster" "_" {
   name     = var.cluster_name
   location = var.master_location
-  project = var.project_id
+  project  = var.project_id
 
-  min_master_version = var.min_master_version
-  node_locations     = var.nodes_location
+  min_master_version  = var.min_master_version
+  node_locations      = var.nodes_location
+  deletion_protection = var.deletion_protection
 
   release_channel {
     channel = var.release_channel
@@ -17,16 +18,21 @@ resource "google_container_cluster" "_" {
     enable_components = []
   }
   private_cluster_config {
-    enable_private_endpoint = true
     enable_private_nodes    = true
+    enable_private_endpoint = !var.is_public
     master_ipv4_cidr_block  = var.master_cidr
   }
 
   master_authorized_networks_config {
-    cidr_blocks {
-      cidr_block = var.master_authorized_networks_config
+    dynamic "cidr_blocks" {
+      for_each = var.master_authorized_networks_config
+
+      content {
+        cidr_block = cidr_blocks.value
+      }
     }
   }
+
 
   ## Pods and services ip blocks
   ## Recommend /14 for Pods and /20 for services
