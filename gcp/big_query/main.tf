@@ -10,4 +10,23 @@ resource "google_bigquery_dataset" "_" {
     "env"     = var.environment
     "project" = var.name
   }
+  default_encryption_configuration {
+    kms_key_name = var.kms_key
+  }
+
+  dynamic "access" {
+    for_each = toset(var.dataset_owners)
+    content {
+      role           = "OWNER"
+      user_by_email  = access.key
+    }
+  }
+
+  dynamic "access" {
+    for_each = toset(var.dataset_readers)
+    content {
+      role           = "READER"
+      user_by_email  = access.key
+    }
+  }
 }

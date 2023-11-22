@@ -18,6 +18,11 @@ variable "environment" {
   description = "Environment name"
 }
 
+variable "kms_key_name" {
+  type        = string
+  description = "KMS Key name -- projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING_NAME]/cryptoKeys/[KEY_NAME]"
+}
+
 variable "pods_cidr" {
   type        = string
   description = "CIDR for pods"
