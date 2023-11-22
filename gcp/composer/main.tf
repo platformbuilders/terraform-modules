@@ -18,6 +18,10 @@ resource "google_composer_environment" "composer" {
       }
     }
 
+    encryption_config {
+      kms_key_name = var.kms_key_name
+      }
+
     software_config {
       image_version = var.image_version
 

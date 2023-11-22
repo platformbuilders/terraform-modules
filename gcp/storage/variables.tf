@@ -17,3 +17,14 @@ variable "environment" {
   type        = string
   description = "Environment name"
 }
+
+variable "kms_key_name" {
+  type        = string
+  description = "KMS Key name"
+}
+
+variable "versioning" {
+  type        = bool
+  description = "Configure storage versioning"
+  default     = false
+}
