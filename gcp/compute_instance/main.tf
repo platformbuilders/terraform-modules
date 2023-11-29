@@ -16,9 +16,7 @@ resource "google_compute_instance" "_" {
       image = var.image
       size  = var.disk_size
     }
-    disk_encryption_key_raw  = {
-      kms_key_self_link = var.kms_key_self_link 
-      }
+    disk_encryption_key_raw = var.kms_key_self_link
   }
 
   allow_stopping_for_update = true
@@ -57,7 +55,6 @@ resource "google_compute_resource_policy" "shutdown-policy" {
   project     = var.project_id
   name        = "${var.name}-shutdown-policy"
   description = "Job para ligar e desligar a VM"
-
 
   instance_schedule_policy {
     vm_stop_schedule {

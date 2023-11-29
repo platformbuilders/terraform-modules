@@ -13,6 +13,16 @@ variable "service_account" {
   description = "The service account to use for Composer"
 }
 
+variable "vpc_id" {
+  type        = string
+  description = "VPC id"
+}
+
+variable "subnet_id" {
+  type        = string
+  description = "Subnet id"
+}
+
 variable "environment" {
   type        = string
   description = "Environment name"

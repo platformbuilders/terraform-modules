@@ -8,8 +8,8 @@ resource "google_composer_environment" "composer" {
     }
 
     node_config {
-      network    = google_compute_network.net.id
-      subnetwork = google_compute_subnetwork.subnet_vpn.id
+      network    = var.vpc_id
+      subnetwork = var.subnet_id
 
       service_account = var.service_account
 
@@ -20,7 +20,7 @@ resource "google_composer_environment" "composer" {
 
     encryption_config {
       kms_key_name = var.kms_key_name
-      }
+    }
 
     software_config {
       image_version = var.image_version
