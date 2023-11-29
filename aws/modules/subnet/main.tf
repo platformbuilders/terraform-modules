@@ -38,10 +38,32 @@ resource "aws_route_table" "private" {
 resource "aws_route_table_association" "private" {
   count = length(var.private_subnets)
 
-  subnet_id = element(aws_subnet.private[*].id, count.index)
-  route_table_id = element(
-    aws_route_table.private[*].id,
-    var.single_nat_gateway ? 0 : count.index,
+  subnet_id      = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private[count.index].id
+}
+
+resource "aws_nat_gateway" "nat" {
+  count = length(var.private_subnets)
+
+  allocation_id = aws_eip.nat[count.index].id
+  subnet_id     = aws_subnet.private[count.index].id
+
+  tags = merge(
+    var.additional_tags,
+    {
+      Name = format("${var.name}-nat-%s", element(var.azs, count.index))
+    }
+  )
+}
+
+resource "aws_eip" "nat" {
+  count = length(var.private_subnets)
+
+  tags = merge(
+    var.additional_tags,
+    {
+      Name = format("${var.name}-eip-%s", element(var.azs, count.index))
+    }
   )
 }
 
@@ -77,18 +99,26 @@ resource "aws_route_table" "public" {
 resource "aws_route_table_association" "public" {
   count = length(var.public_subnets)
 
-  subnet_id      = element(aws_subnet.public[*].id, count.index)
-  route_table_id = element(aws_route_table.public[*].id, count.index)
+  subnet_id      = aws_subnet.public[count.index].id
+  route_table_id = aws_route_table.public[count.index].id
 }
 
 resource "aws_route" "public_internet_gateway" {
   count = length(var.public_subnets)
 
-  route_table_id         = aws_route_table.public[0].id
+  route_table_id         = aws_route_table.public[count.index].id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.this.id
 
   timeouts {
     create = "5m"
   }
+}
+
+resource "aws_route" "private_nat_gateway" {
+  count = length(var.private_subnets)
+
+  route_table_id         = aws_route_table.private[count.index].id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.nat[count.index].id
 }
