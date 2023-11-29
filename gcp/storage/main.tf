@@ -9,9 +9,9 @@ resource "google_storage_bucket" "_" {
     "project" = var.name
   }
   encryption {
-  default_kms_key_name = var.kms_key_name
-}
+    default_kms_key_name = var.kms_key_name
+  }
   versioning {
-  enabled = true
-}
+    enabled = true
+  }
 }
