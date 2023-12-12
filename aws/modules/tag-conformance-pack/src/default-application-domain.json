@@ -1,0 +1,93 @@
+[
+  {
+      "search_key": "logs-cloudwatch-logs-logs-log-log",
+      "application": "logs",
+      "domain": "observability",
+      "account": ""
+  },
+  {
+    "search_key": "kong-kong-kong",
+    "application": "kong",
+    "domain": "kong",
+    "account": ""
+  },
+  {
+    "search_key": "configrule-controltower-config-rule-configrule-securityhub-config-rule-service-rule-configrule-servicerule-tag-conformance-pack-tag-conformance-pack",
+    "application": "config",
+    "domain": "infrastructure",
+    "account": ""
+  },
+  {
+    "search_key": "network-vpc-firewall-acl-subnet-igw-vpn-tgw-vpce-nat-rtb-rt-pl-dopt-pc-sg-eni-interface-elb-load-balancer-loadbalancer-default",
+    "application": "network",
+    "domain": "infrastructure",
+    "account": ""
+  },
+  {
+    "search_key": "turbonomic-turbonomic",
+    "application": "turbonomic",
+    "domain": "finops",
+    "account": ""
+  },
+  {
+    "search_key": "alarm-cpu-utilization-disk-cpuload-diskqueue-vents-eventbridge-scheduler-eventbridge-scheduler",
+    "application": "alarm",
+    "domain": "observability",
+    "account": ""
+  },
+  {
+    "search_key": "snapshot-snapshot-snap-bkp-backup",
+    "application": "snapshot",
+    "domain": "backup",
+    "account": ""
+  },
+  {
+    "search_key": "ssm-parameter-ssmparameter",
+    "application": "ssm ",
+    "domain": "infrastructure",
+    "account": ""
+  },
+  {
+    "search_key": "iam-policy-sso-executionrole-execution-role-role-onlyaccess-only-access-readaccess-read-access-fullaccess-full-access-servicerole-service-role-reservedsso-reserved-sso-security-hub-securityhub-security",
+    "application": "conformity",
+    "domain": "security",
+    "account": ""
+  },
+  {
+    "search_key": "argo-argocd-argo",
+    "application": "argo",
+    "domain": "devops",
+    "account": ""
+  },
+  {
+    "search_key": "lambda-tag-lambda-tag-finops-",
+    "application": "tag-controller",
+    "domain": "tag-controller",
+    "account": ""
+  },
+  {
+    "search_key": "acm-certificate-certificate-acm",
+    "application": "certificate",
+    "domain": "security",
+    "account": ""
+  },
+  {
+    "search_key": "billing-report-repot-billing",
+    "application": "billing-report",
+    "domain": "finops",
+    "account": ""
+  },
+  {
+    "search_key": "vol-volume-s3",
+    "application": "storage",
+    "domain": "backup",
+    "account": ""
+  },
+  {
+    "search_key": "datadogintegration-datadog-dd",
+    "application": "datadog",
+    "domain": "observability",
+    "account": ""
+  }
+
+]
