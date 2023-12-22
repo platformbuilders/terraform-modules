@@ -1,0 +1,238 @@
+[
+  {
+    "search_key": "kong-kong-kong",
+    "application": "kong",
+    "domain": "kong",
+    "account": "demo"
+  },
+  {
+    "search_key": "configrule-controltower-config-rule-configrule-config-rule-service-rule-configrule-servicerule",
+    "application": "config",
+    "domain": "infrastructure",
+    "account": "demo"
+  },
+  {
+    "search_key": "turbonomic-turbonomic",
+    "application": "turbonomic",
+    "domain": "finops",
+    "account": "demo"
+  },
+  {
+    "search_key": "alarms-cpu-utilization-cloudwatch-alarm-cloud-watch-disk-queue-diskqueue-cpuload",
+    "application": "alarm",
+    "domain": "observability",
+    "account": "demo"
+  },
+  {
+    "search_key": "ssm-parameter-ssm-parameter-ssm",
+    "application": "ssm",
+    "domain": "infrastructure",
+    "account": "demo"
+  },
+  {
+    "search_key": "iam-policy-sso-executionrole-execution-role-role-onlyaccess-only-access-readaccess-read-access-fullaccess-full-access-servicerole-service-role-reservedsso-reserved-sso-certificate-security-hub-securityhub-security-secret-manager-secretsmanager",
+    "application": "conformity",
+    "domain": "security",
+    "account": "demo"
+  },
+  {
+    "search_key": "argo-argocd-argo-argocd",
+    "application": "argo",
+    "domain": "devops",
+    "account": "demo"
+  },
+  {
+    "search_key": "lambda-tag-lambda-tag",
+    "application": "tag-controller",
+    "domain": "tag-controller",
+    "account": "demo"
+  },
+  {
+    "search_key": "devportal-devportal-dev-portal",
+    "application": "devportal",
+    "domain": "devportal",
+    "account": "demo"
+  },
+  {
+    "search_key": "portal-sustentacao-portal-sustentacao-sustentacao",
+    "application": "devportal-sustentacao",
+    "domain": "devportal",
+    "account": "demo"
+  },
+  {
+    "search_key": "lambda-tag-lambda-tag-finops-tag",
+    "application": "tag-controller",
+    "domain": "tag-controller",
+    "account": "demo"
+  },
+  {
+    "search_key": "telemetria-telemetria",
+    "application": "telemetria",
+    "domain": "telemetria",
+    "account": "demo"
+  },
+  {
+    "search_key": "gitlab-gitlab-gitlab-runner",
+    "application": "gitlab-runner",
+    "domain": "devops",
+    "account": "demo"
+  },
+  {
+    "search_key": "dl-dl-dl-saude",
+    "application": "dl-saude",
+    "domain": "plataforma-saude",
+    "account": "demo"
+  },
+  {
+    "search_key": "ms-ms-ms-saude",
+    "application": "ms-saude",
+    "domain": "plataforma-saude",
+    "account": "demo"
+  },
+  {
+    "search_key": "eks-core-kubernetes-instance-autoscaling-scaling-autoScalingGroupName-AutoScalingGroup",
+    "application": "runners-tools",
+    "domain": "plataforma-saude",
+    "account": "demo"
+  },
+  {
+    "search_key": "grafana-monitoring",
+    "application": "grafana",
+    "domain": "observability",
+    "account": "demo"
+  },
+  {
+    "search_key": "logs-logs-logs-logs-logs",
+    "application": "logs",
+    "domain": "observability",
+    "account": "demo"
+  },
+  {
+    "search_key": "eni-network-interface-networkinterface",
+    "application": "network",
+    "domain": "infrastructure",
+    "account": "demo"
+  },
+  {
+    "search_key": "vpc",
+    "application": "network",
+    "domain": "infrastructure",
+    "account": "demo"
+  },
+  {
+    "search_key": "rtb-route-table-routetable",
+    "application": "network",
+    "domain": "infrastructure",
+    "account": "demo"
+  },
+  {
+    "search_key": "subnet-sn",
+    "application": "network",
+    "domain": "infrastructure",
+    "account": "demo"
+  },
+  {
+    "search_key": "igw-internet-gateway-internetgateway",
+    "application": "network",
+    "domain": "infrastructure",
+    "account": "demo"
+  },
+  {
+    "search_key": "cgw-customer-gateway",
+    "application": "network",
+    "domain": "infrastructure",
+    "account": "demo"
+  },
+  {
+    "search_key": "eip-eipalloc",
+    "application": "network",
+    "domain": "infrastructure",
+    "account": "demo"
+  },
+  {
+    "search_key": "sg-security-group-securitygroup",
+    "application": "network",
+    "domain": "infrastructure",
+    "account": "demo"
+  },
+  {
+    "search_key": "vpn-gateway-vpn",
+    "application": "network",
+    "domain": "infrastructure",
+    "account": "demo"
+  },
+  {
+    "search_key": "dms-endpoint",
+    "application": "network",
+    "domain": "infrastructure",
+    "account": "demo"
+  },
+  {
+    "search_key": "open-vpn-openvpn",
+    "application": "network",
+    "domain": "infrastructure",
+    "account": "demo"
+  },
+  {
+    "search_key": "rundeck-nao",
+    "application": "rundeck",
+    "domain": "devops",
+    "account": "demo"
+  },
+  {
+    "search_key": "snap-snapshot-backup-backup-bkp",
+    "application": "snapshot",
+    "domain": "backup",
+    "account": "demo"
+  },
+  {
+    "search_key": "ecr-ecr",
+    "application": "ecr",
+    "domain": "devops",
+    "account": "demo"
+  },
+  {
+    "search_key": "sns",
+    "application": "sns",
+    "domain": "infrastructure",
+    "account": "demo"
+  },
+  {
+    "search_key": "sqs",
+    "application": "sqs",
+    "domain": "infrastructure",
+    "account": "demo"
+  },
+  {
+    "search_key": "alarm-cpu-utilization-disk-cpuload-diskqueue-events-eventbridge-bridge-scheduler-eventbridge-scheduler",
+    "application": "alarm",
+    "domain": "observability",
+    "account": "demo"
+  },
+  {
+    "search_key": "health-cache",
+    "application": "health-cache",
+    "domain": "health",
+    "account": "demo"
+  },
+  {
+    "search_key": "acm-certificate",
+    "application": "acm",
+    "domain": "infrastructure",
+    "account": "demo"
+  },
+  {
+    "search_key": "athena-athena",
+    "application": "athena",
+    "domain": "analytics",
+    "account": "demo"
+  },
+  {
+    "search_key": "spark-spark",
+    "application": "spark",
+    "domain": "analytics",
+    "account": "demo"
+  }
+
+
+]
