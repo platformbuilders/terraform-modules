@@ -6,7 +6,15 @@ variable "profile" {
 }
 
 variable "tags" {
-  type = map(string)
+  type = object({
+    application = string
+    domain      = string
+    board       = string
+    company     = string
+    shared      = string
+    env         = string
+    tag_created = string
+  })
 }
 
 variable "application_domain_path" {
@@ -25,7 +33,7 @@ variable "custom_lambda_resource_types" {
 
 variable "custom_lambda_script" {
   type        = string
-  description = "script para a função lambda do lambda custom config"
+  description = "script para a função landa do lambda custom config"
 }
 
 variable "script_path" {
@@ -55,7 +63,17 @@ variable "RemediationExecutionControls" {
     MaximumAutomaticAttempts = number
     RetryAttemptSeconds      = number
   })
-
+  default = {
+    ExecutionControls = {
+      SsmControls = {
+        ConcurrentExecutionRatePercentage = 20
+        ErrorPercentage                   = 40
+      }
+    }
+    Automatic                = false
+    MaximumAutomaticAttempts = 1
+    RetryAttemptSeconds      = 1200
+  }
   description = "Config Remediation ExecutionControls yaml block"
 }
 
@@ -77,4 +95,12 @@ variable "event_bridge_tagger_script" {
 
 variable "create_event_bridge_tagger" {
   type = bool
+}
+
+# a função lambda event_bridge_tagger vai dispara apenas quando um recurso for modificado.
+# esse scheduler tem como função executar a função lambda periodicamente para todos os recursos suportados por ela.
+variable "schedule_expression" {
+  type = string
+  default = "rate(10 day)"
+  description = "taxa de execução do event bridge schedule que dispara a função lambda event_bridge_tagger."
 }

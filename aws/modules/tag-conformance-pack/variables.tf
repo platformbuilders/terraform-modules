@@ -62,3 +62,12 @@ variable "create_event_bridge_tagger" {
 variable "script_policy" {
   type = any
 }
+
+variable "profile" {
+  type = string
+}
+
+variable "schedule_expression" {
+  type = string
+  default = "rate(10 day)"
+}
