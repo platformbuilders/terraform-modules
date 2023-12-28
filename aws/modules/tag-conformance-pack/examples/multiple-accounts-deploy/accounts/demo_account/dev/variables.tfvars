@@ -1,8 +1,8 @@
-profile                 = "DEMO" #account name, do not change
-bucket_name             = "tag-conformance-pack-files-demo-dev"
-create_tf_backend          = false
+profile                 = "<profile>" #account name, do not change
+bucket_name             = "tag-conformance-pack-files-<account>-<env>"
+create_tf_backend          = true
 region                  = "us-east-1"
-application_domain_path = "./accounts/demo_account/application-domain.json"
+application_domain_path = "./accounts/<account>/<env>/application-domain.json"
 script_path = "./src"
 custom_lambda_script = "custom-required-tags-evaluation.py"
 create_event_bridge_tagger = true
@@ -11,10 +11,10 @@ ssm_script = "ssmDocumentAutomation.py"
 tags = {
   application = "config"
   domain      = "infrastructure"
-  board       = "demo"
+  board       = "board"
   company     = "rd"
   shared      = "no"
-  env         = "dev"
+  env         = "env"
   tag_created = "iac"
 }
 RemediationExecutionControls = {
@@ -118,4 +118,4 @@ custom_lambda_resource_types = [
   "AWS::Cloud9::EnvironmentEC2",
   "AWS::CloudTrail::Trail"
 ]
-  
+

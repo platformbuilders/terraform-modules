@@ -63,16 +63,11 @@ variable "script_policy" {
   type = any
 }
 
-variable "create_tf_backend" {
-  type = bool
-  default = false
-}
-
-variable "create_tf_backend_dynamo_table" {
-  type = bool
-  default = false
-}
-
 variable "profile" {
   type = string
+}
+
+variable "schedule_expression" {
+  type = string
+  default = "rate(10 day)"
 }

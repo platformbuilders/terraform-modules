@@ -2,8 +2,6 @@ module "ConformancePack" {
   source = "../module/tag-conformance-pack"
 
   profile                        = var.profile
-  create_tf_backend              = var.create_tf_backend
-  create_tf_backend_dynamo_table = var.create_tf_backend_dynamo_table
   bucket_name                    = var.bucket_name
   application_domain_path        = var.application_domain_path
   RemediationExecutionControls   = var.RemediationExecutionControls
