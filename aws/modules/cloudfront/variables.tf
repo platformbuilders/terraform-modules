@@ -47,7 +47,7 @@ variable "is_ipv6_enabled" {
 variable "default_root_object" {
   description = "The object that you want CloudFront to return when an end user requests the root URL."
   type        = string
-  default     = "login"
+  default     = ""
 }
 
 variable "allowed_methods" {
@@ -65,13 +65,19 @@ variable "cached_methods" {
 variable "forwarded_query_string" {
   description = "Indicates whether you want CloudFront to forward query strings to the origin."
   type        = bool
-  default     = false
+  default     = true
+}
+
+variable "forwarded_headers" {
+  description = "Indicates whether you want CloudFront to forward headers to the origin."
+  type        = list(string)
+  default     = ["*"]
 }
 
 variable "forwarded_cookies" {
   description = "Specifies which cookies to forward to the origin for this cache behavior: 'all', 'none' or 'whitelist'."
   type        = string
-  default     = "none"
+  default     = "all"
 }
 
 variable "viewer_protocol_policy" {

@@ -44,14 +44,14 @@ resource "aws_wafv2_web_acl" "builders" {
         # Substituindo a ação para regras específicas
         rule_action_override {
           action_to_use {
-            block {}
+            count {}
           }
           name = "SizeRestrictions_QUERYSTRING"
         }
 
         rule_action_override {
           action_to_use {
-            block {}
+            count {}
           }
           name = "NoUserAgent_HEADER"
         }
@@ -87,7 +87,7 @@ resource "aws_wafv2_web_acl" "builders" {
 
         rule_action_override {
           action_to_use {
-            block {}
+            count {}
           }
           name = "SignalKnownBotDataCenter"
         }
@@ -116,14 +116,14 @@ resource "aws_wafv2_web_acl" "builders" {
 
         rule_action_override {
           action_to_use {
-            block {}
+            count {}
           }
           name = "AWSManagedIPReputationList"
         }
 
         rule_action_override {
           action_to_use {
-            block {}
+            count {}
           }
           name = "AWSManagedIPDDoSList"
         }
