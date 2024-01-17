@@ -133,3 +133,9 @@ variable "acm_certificate_arn" {
   type        = string
   default     = ""
 }
+
+variable "web_acl_id" {
+  description = "The ID of the AWS WAF web ACL to associate with this distribution."
+  type        = string
+  default     = ""
+}

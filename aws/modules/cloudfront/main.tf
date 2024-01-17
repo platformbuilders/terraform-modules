@@ -2,6 +2,7 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
   enabled             = true
   is_ipv6_enabled     = var.is_ipv6_enabled
   default_root_object = var.default_root_object
+  web_acl_id          = var.web_acl_id
 
   dynamic "origin" {
     for_each = var.origin_type == "elb" ? [1] : []
@@ -11,10 +12,10 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
       origin_id   = "ELBOriginID"
 
       custom_origin_config {
-        http_port                = 80
-        https_port               = 443
-        origin_protocol_policy   = var.origin_protocol_policy
-        origin_ssl_protocols     = var.origin_ssl_protocols
+        http_port              = 80
+        https_port             = 443
+        origin_protocol_policy = var.origin_protocol_policy
+        origin_ssl_protocols   = var.origin_ssl_protocols
       }
     }
   }
@@ -66,5 +67,5 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
     minimum_protocol_version       = var.use_acm_certificate ? "TLSv1.2_2019" : null
     cloudfront_default_certificate = !var.use_acm_certificate
   }
-  
+
 }
