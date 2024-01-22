@@ -139,3 +139,15 @@ variable "web_acl_id" {
   type        = string
   default     = ""
 }
+
+variable "aliases" {
+  description = "List of CNAMEs (alternate domain names), if any, for the distribution."
+  type        = list(string)
+  default     = null
+}
+
+variable "response_headers_policy_id" {
+  description = "The ID of the response headers policy to associate with this distribution."
+  type        = string
+  default     = null
+}
