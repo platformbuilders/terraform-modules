@@ -3,6 +3,7 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
   is_ipv6_enabled     = var.is_ipv6_enabled
   default_root_object = var.default_root_object
   web_acl_id          = var.web_acl_id
+  aliases             = var.aliases
 
   dynamic "origin" {
     for_each = var.origin_type == "elb" ? [1] : []
@@ -34,9 +35,10 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
   }
 
   default_cache_behavior {
-    allowed_methods  = var.allowed_methods
-    cached_methods   = var.cached_methods
-    target_origin_id = var.origin_type == "elb" ? "ELBOriginID" : "S3OriginID"
+    allowed_methods            = var.allowed_methods
+    cached_methods             = var.cached_methods
+    target_origin_id           = var.origin_type == "elb" ? "ELBOriginID" : "S3OriginID"
+    response_headers_policy_id = var.response_headers_policy_id
 
     forwarded_values {
       query_string = var.forwarded_query_string
