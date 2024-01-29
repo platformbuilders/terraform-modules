@@ -7,7 +7,7 @@ module "event_bridge_tagger" {
   handler       = "${trimsuffix(var.event_bridge_tagger_script, ".py")}.lambda_handler"
   runtime       = "python3.10"
   create        = var.create_event_bridge_tagger
-  source_path   = "../module/tag-conformance-pack/src/event_bridge_tagger.py" # #"${var.script_path}/${var.event_bridge_tagger_script}"
+  source_path   = "${var.script_path}/${var.event_bridge_tagger_script}"
 
   attach_create_log_group_permission = true
   cloudwatch_logs_retention_in_days  = 1
@@ -145,6 +145,7 @@ PATTERN
 }
 
 
+
 resource "aws_cloudwatch_event_target" "cloudwatch_logs_trigger" {
   count = var.create_event_bridge_tagger ? 1 : 0
   rule  = aws_cloudwatch_event_rule.cloudwatch_logs_trigger[0].name
@@ -167,4 +168,24 @@ resource "aws_cloudwatch_event_target" "config_rule_trigger" {
   count = var.create_event_bridge_tagger ? 1 : 0
   rule  = aws_cloudwatch_event_rule.config_rule_trigger[0].name
   arn   = module.event_bridge_tagger.lambda_function_arn
+}
+
+module "event_bridge_schedule" {
+  source = "terraform-aws-modules/eventbridge/aws"
+  create = var.create_event_bridge_tagger
+
+  bus_name = "event_bridge_tagger_schedule"
+
+  attach_lambda_policy = true
+  lambda_target_arns   = [module.event_bridge_tagger.lambda_function_arn]
+
+  schedules = {
+    event-bridge-tagger-cron = {
+      description         = "Trigger for a Lambda"
+      schedule_expression = var.schedule_expression
+      timezone            = "America/Sao_Paulo"
+      arn                 = module.event_bridge_tagger.lambda_function_arn
+      input               = jsonencode({ "event_bridge_tagger_schedule": "schedule" }) # utilizado no script para distinguir o evento de schedule de outros.
+    }
+  }
 }

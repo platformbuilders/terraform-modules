@@ -32,7 +32,7 @@ class EventBridgeTagger:
                     )['Body'].read().decode('utf-8')
 
             return json.loads(response)
-        except Exception as e:
+        except ClientError as e:
             print(f"Error reading JSON from S3: {e}")
             raise
 
@@ -90,7 +90,7 @@ class EventBridgeTagger:
             domain_value = matching_item.get("domain", "")
 
             return application_value, domain_value
-        except Exception as e:
+        except ClientError as e:
             print(
                     f"\nNo match found for search key (application and domain values): {search_key}\n"
                     )
@@ -253,6 +253,7 @@ class EventBridgeTagger:
 
         return response['tags']
 
+
     def get_ssm_parameter_tags(self, resource_arn) -> list:
         response = self.ssm.list_tags_for_resource(
                 ResourceType = 'Parameter',
@@ -267,62 +268,191 @@ class EventBridgeTagger:
 
         return response['Tags']
 
+    def get_log_groups(self) -> list:
+        '''
+
+        :return: lista de arns de todos os log groups
+        '''
+        next_token = None
+        arn_list = []
+
+        while True:
+            if next_token:
+                response = self.logs.describe_log_groups(
+                        limit = 50,
+                        NextToken = next_token
+                        )
+
+            else:
+                response = self.logs.describe_log_groups(
+                        limit = 50,
+                        )
+
+            resources = response['logGroups']
+
+            for resource in resources:
+                resource_arn = f"arn:aws:logs:{region}:{account}:log-group:{resource['logGroupName']}"
+                arn_list.append(resource_arn)
+            next_token = response.get('nextToken')
+
+            if not next_token:
+                break
+
+        return arn_list
+
+    def get_config_rules(self) -> list:
+        '''
+
+        :return: lista de arns de todos os log groups
+        '''
+        next_token = None
+        arn_list = []
+
+        while True:
+            if next_token:
+                response = self.config.describe_config_rules(
+                        NextToken = next_token
+                        )
+            else:
+                response = self.config.describe_config_rules(
+                        )
+
+            resources = response['ConfigRules']
+
+            for resource in resources:
+                resource_arn = resource['ConfigRuleArn']
+                arn_list.append(resource_arn)
+
+            next_token = response.get('NextToken')
+
+            if not next_token:
+                break
+
+        return arn_list
+
+    def get_ssm_parameters(self) -> list:
+        '''
+
+        :return: lista de arns de todos os ssm parameters
+        '''
+        next_token = None
+        arn_list = []
+
+        while True:
+            if next_token:
+                response = self.ssm.describe_parameters(
+                        MaxResults = 50,
+                        NextToken = next_token
+                        )
+            else:
+                response = self.ssm.describe_parameters(
+                        MaxResults = 50
+                        )
+
+            resources = response['Parameters']
+
+            for resource in resources:
+                resource_arn = resource['Name']
+                arn_list.append(resource_arn)
+
+            next_token = response.get('NextToken')
+
+            if not next_token:
+                break
+
+        return arn_list
+
+
+    def get_elasticache_clusters(self) -> list:
+        '''
+
+        :return: lista de arns de todos os ssm parameters
+        '''
+        next_token = None
+        arn_list = []
+
+        while True:
+            if next_token:
+                response = self.elasticache.describe_cache_clusters(
+                        MaxRecords = 100,
+                        Marker = next_token
+                        )
+            else:
+                response = self.elasticache.describe_cache_clusters(
+                        MaxRecords = 100
+                        )
+
+            resources = response['CacheClusters']
+
+            for resource in resources:
+                resource_arn = resource['ARN']
+                arn_list.append(resource_arn)
+
+            next_token = response.get('Marker')
+
+            if not next_token:
+                break
+
+        return arn_list
+
 
 def check_defined(reference, reference_name):
     if not reference:
-        raise Exception('Error: ', reference_name, 'is not defined')
+        raise ClientError('Error: ', reference_name, 'is not defined')
     return reference
 
 
-def lambda_handler(event, context):
-    '''
-    Cada evento represena 1 recurso. Para cada recurso é comparado suas tags um catálogo de tags de referência.
-    Se fora de conformidade o recurso é tagueado.
-    :param event: payload do eventbridge
-    :return: resposta da api de tagueamento ou que o recurso já está em compliance com o catálogo.
-    '''
-    event_source = event["source"]
+def resource_tagger(event, lambda_action):
     print(f"Event: {event}\n")
+    event_source = event["source"]
     print(f"EVENT SOURCE: {event_source}\n")
     resource_key_words = []
     resource_arn = ""
 
-    # cada source (logs, elasticache, ssm, config) possui uma estrutura de payload diferente.
-    if 'logs' in event_source:
-        if "resourceArn" in event["detail"]["requestParameters"].keys():
-            resource_arn = event["detail"]["requestParameters"]["resourceArn"]
+    if 'event_bridge_tagger_schedule' not in event:
+        # cada source (logs, elasticache, ssm, config) possui uma estrutura de payload diferente.
+        if 'logs' in event_source:
+            if "resourceArn" in event["detail"]["requestParameters"].keys():
+                resource_arn = event["detail"]["requestParameters"]["resourceArn"]
 
-        elif "logGroupName" in event["detail"]["requestParameters"].keys():
-            log_group = event["detail"]["requestParameters"]["logGroupName"]
-            resource_arn = f"arn:aws:logs:{region}:{account}:log-group:{log_group}"
-            resource_key_words.extend(["logs"])
+            elif "logGroupName" in event["detail"]["requestParameters"].keys():
+                log_group = event["detail"]["requestParameters"]["logGroupName"]
+                resource_arn = f"arn:aws:logs:{region}:{account}:log-group:{log_group}"
+                resource_key_words.extend(["logs"])
 
-    elif 'elasticache' in event_source:
-        resource_arn = event["detail"]["requestParameters"]["resourceName"]
-        resource_key_words.extend(["elasticache"])
+        elif 'elasticache' in event_source:
+            resource_arn = event["detail"]["requestParameters"]["resourceName"]
+            resource_key_words.extend(["elasticache"])
 
-    elif 'config' in event_source:
-        if "resourceArn" in event["detail"]["requestParameters"].keys():
-            resource_arn = event["detail"]["requestParameters"]["resourceArn"]
+        elif 'config' in event_source:
+            if "resourceArn" in event["detail"]["requestParameters"].keys():
+                resource_arn = event["detail"]["requestParameters"]["resourceArn"]
 
-        elif "configRuleArn" in event["detail"]["requestParameters"]["configRule"].keys():
-            resource_arn = event["detail"]["requestParameters"]["configRule"]["configRuleArn"]
+            elif "configRuleArn" in event["detail"]["requestParameters"]["configRule"].keys():
+                resource_arn = event["detail"]["requestParameters"]["configRule"]["configRuleArn"]
 
-    elif 'ssm' in event_source:
-        resource_arn = event["detail"]["requestParameters"]["resourceId"]
-        resource_key_words.extend(["ssm"])
+        elif 'ssm' in event_source:
+            resource_arn = event["detail"]["requestParameters"]["resourceId"]
+            # o ssm é identificado via resource id que não contem a palavra ssm como no arn de outros recursos
+            # portanto é necessario add a palavra à lista de comparações
+            resource_key_words.extend(["ssm"])
 
+        else:
+            raise ClientError('event source não identificado. Recrusosos suportados: SSM, CONFIG, ELASTICACHE, LOGS')
     else:
-        raise Exception('event source não identificado. Recrusosos suportados: SSM, CONFIG, ELASTICACHE, LOGS')
+        resource_arn = event['resourceID']
+        if 'ssm' in event_source:
+            # o ssm é identificado via resource id que não contem a palavra 'ssm',por exemplo, como no arn de outros recursos
+            # portanto é necessario add a palavra à lista de comparações
+            resource_key_words.extend(["ssm"])
 
     required_tags = {}
 
-    lambda_action = EventBridgeTagger(
-            bucket_name = os.environ.get("BUCKET_NAME"),
-            application_domain_json_key = os.environ.get("BUCKET_KEY"),
-            )
-
-    resource_tags = lambda_action.get_tags(event_source, resource_arn)
+    try:
+        resource_tags = lambda_action.get_tags(event_source, resource_arn)
+    except ClientError as e:
+        print(f'Erro ao listar tags do recurso: {e}')
+        raise
 
     # normalizar a estrutura de tags para formato lista
     if isinstance(resource_tags, dict):
@@ -361,7 +491,7 @@ def lambda_handler(event, context):
                     resource_key_words.extend([item['eks:nodegroup-name']])
 
         print(f"Lista de palavras + TagName e Tags EKS, se houver -> {resource_key_words}\n")
-    except Exception as e:
+    except ClientError as e:
         print(f'\n exception No tag Name found-> {e}')
         print(f'continuing...')
 
@@ -370,7 +500,7 @@ def lambda_handler(event, context):
                 json_data = json_data, resource_words_list = resource_key_words
                 )
         print(f'\nsearch_key -> {search_key}')
-    except Exception as e:
+    except ClientError as e:
         print(f'\nNão foi possivel encontrar search_key\n')
         raise
 
@@ -393,7 +523,7 @@ def lambda_handler(event, context):
         required_tags['env'] = os.environ.get("TAG_ENV")
 
 
-    except Exception as e:
+    except ClientError as e:
         print(
                 f'\nNão foi possivel gerar tags application e/ou domain -> \n{e}\n'
                 )
@@ -403,14 +533,67 @@ def lambda_handler(event, context):
     if required_tags == lambda_action.array_to_dict(resource_tags):
         print(f'\nREQUIRED TAGS: \n {required_tags}')
         print(f'\nRESOURCE TAGS: \n {resource_tags}')
-        print("NOTHING TO DO, TAG IS COMPLIANT")
-        return "Nothing to do, tag is COMPLIANT"
+        return "NOTHING TO DO, TAG IS COMPLIANT"
 
-    # add info tags
-    # required_tags['lambda_automation'] = "event_bridge_tagger"
+    else:
+        # add info tags
+        # required_tags['lambda_automation'] = "event_bridge_tagger"
 
-    response = lambda_action.tag_resource(event_source, resource_arn, required_tags)
+        try:
+            response = lambda_action.tag_resource(event_source, resource_arn, required_tags)
+        except ClientError as e:
+            print(f'Erro ao taguear o recurso: {e}')
+            raise
 
-    print(f'\n ### response \n {response} \n########')
+        print(f'RESPONSE -> {response}')
+        return response
 
-    return response
+
+def schedule_trigger(event, lambda_action):
+    resources_arns = []
+    lambda_response = {}
+    lambda_action = lambda_action
+
+    event_sources = ["aws.logs", "aws.config", ""
+                                               ".ssm", "aws.elasticache"]
+
+    for event_source in event_sources:
+        event['source'] = event_source
+
+        if 'logs' in event_source:
+            resources_arns = lambda_action.get_log_groups()
+            lambda_response['logGroups'] = len(resources_arns)
+        elif 'config' in event_source:
+            resources_arns = lambda_action.get_config_rules()
+            lambda_response['configRules'] = len(resources_arns)
+        elif 'elasticache' in event_source:
+            resources_arns = lambda_action.get_elasticache_clusters()
+            lambda_response['elasticacheClusters'] = len(resources_arns)
+        elif 'ssm' in event_source:
+            resources_arns = lambda_action.get_ssm_parameters()
+            lambda_response['ssmParameters'] = len(resources_arns)
+
+        print(f'TAGGING BY SCHEDULE EVENT')
+        print(f'TAGGING {len(resources_arns)} {event_source} resources')
+        for arn in resources_arns:
+            event['resourceID'] = arn
+            print(f'TAGGING {event_source}: {arn}')
+            response = resource_tagger(event, lambda_action)
+            print(f"RESPONSE -> {response}")
+
+    return lambda_response
+
+
+
+def lambda_handler(event, context):
+    lambda_action = EventBridgeTagger(
+            bucket_name = os.environ.get("BUCKET_NAME"),
+            application_domain_json_key = os.environ.get("BUCKET_KEY"),
+            )
+
+    if 'event_bridge_tagger_schedule' in event:
+        return schedule_trigger(event, lambda_action)
+
+    else:
+        return resource_tagger(event, lambda_action)
+
