@@ -80,6 +80,12 @@ variable "forwarded_cookies" {
   default     = "all"
 }
 
+variable "whitelisted_cookies" {
+  description = "List of cookies to forward to the origin for this cache behavior."
+  type        = list(string)
+  default     = []
+}
+
 variable "viewer_protocol_policy" {
   description = "The viewer protocol policy for the default cache behavior. Valid values are 'allow-all', 'https-only', and 'redirect-to-https'."
   type        = string

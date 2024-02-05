@@ -46,6 +46,7 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
 
       cookies {
         forward = var.forwarded_cookies
+        whitelisted_names = var.whitelisted_cookies
       }
     }
 
