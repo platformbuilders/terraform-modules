@@ -9,6 +9,7 @@ module "eks" {
 
   cluster_endpoint_private_access = var.endpoint_private_access
   cluster_endpoint_public_access  = var.endpoint_public_access
+  kms_key_administrators          = var.kms_key_administrators
 
   cluster_addons = {
     coredns = {
