@@ -52,7 +52,7 @@ resource "google_compute_instance" "_" {
 
 resource "google_compute_address" "default" {
   project = var.project_id
-  name    = "${var.name}-shutdown-policy"
+  name    = "${var.name}-address"
   region  = var.region
 }
 
