@@ -3,6 +3,12 @@ variable "project_id" {
   description = "The project ID to manage"
 }
 
+variable "region" {
+  type        = string
+  description = "Region"
+  default     = "us-central1"
+}
+
 variable "zone" {
   type        = string
   description = "The zone"
