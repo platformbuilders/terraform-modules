@@ -47,7 +47,10 @@ resource "google_compute_instance" "_" {
     }
   }
 
-  resource_policies = var.resource_policies
+  resource_policies = concat(
+    var.resource_policies,
+    var.schedule_shutdown ? [google_compute_resource_policy.shutdown-policy.0.id] : []
+  )
 }
 
 resource "google_compute_address" "default" {
