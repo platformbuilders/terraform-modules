@@ -43,10 +43,10 @@ resource "aws_route_table_association" "private" {
 }
 
 resource "aws_nat_gateway" "nat" {
-  count = length(var.private_subnets)
+  count = length(var.public_subnets)
 
   allocation_id = aws_eip.nat[count.index].id
-  subnet_id     = aws_subnet.private[count.index].id
+  subnet_id     = aws_subnet.public[count.index].id
 
   tags = merge(
     var.additional_tags,
