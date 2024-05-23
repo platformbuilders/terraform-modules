@@ -42,6 +42,11 @@ variable "deployment_mode" {
   default     = "SINGLE_INSTANCE"
 }
 
+variable "vpc_cidr_block" {
+  description = "VPC CIDR"
+  type        = string
+}
+
 variable "username" {
   description = "Username of broker"
   type        = string
