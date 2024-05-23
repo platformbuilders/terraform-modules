@@ -20,7 +20,7 @@ resource "aws_mq_broker" "_" {
   storage_type       = var.storage_type
   host_instance_type = var.host_instance_type
   deployment_mode    = var.deployment_mode
-  security_groups    = [aws_security_group.amazon_mq_sg]
+  security_groups    = [aws_security_group.amazon_mq_sg.id]
 
   subnet_ids = var.subnet_ids
 
