@@ -33,8 +33,7 @@ variable "storage_type" {
 variable "host_instance_type" {
   description = "Type of instance"
   type        = string
-  default     = "mq.t3.micro"
-}
+  }
 
 variable "deployment_mode" {
   description = "Valid values are SINGLE_INSTANCE, ACTIVE_STANDBY_MULTI_AZ, and CLUSTER_MULTI_AZ. Default is SINGLE_INSTANCE."
