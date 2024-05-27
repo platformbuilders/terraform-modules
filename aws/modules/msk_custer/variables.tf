@@ -60,5 +60,4 @@ variable "vpc_id" {
 
 variable "source_security_group_id_allowed" {
   description = "Security groupid to allow connect with MSK Cluster"
-  #type = list(string)
 }

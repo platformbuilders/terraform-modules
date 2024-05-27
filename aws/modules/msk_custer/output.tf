@@ -39,3 +39,11 @@ output "security_group_id" {
 output "secrets_arn" {
   value = module.secrets_manager.secret_arn
 }
+
+output "aws_account_id" {
+  value = data.aws_caller_identity.current.account_id
+}
+
+output "kms" {
+  value = module.kms.key_arn
+}
