@@ -110,35 +110,38 @@ module "broker_security_group" {
     },
   ]
 
-  ingress_with_source_security_group_id = [
+
+
+
+
+
+
+
+  ingress_with_cidr_blocks = [
     {
-      from_port                = 9092
-      to_port                  = 9092
-      protocol                 = "tcp"
-      description              = "Allow security groups to MSK Cluster"
-      source_security_group_id = var.source_security_group_id_allowed
+      rule = "kafka-broker-tcp"
+      cidr_blocks = var.cidr_blocks_allowed
     },
     {
-      from_port                = 9094
-      to_port                  = 9094
-      protocol                 = "tcp"
-      description              = "Allow security groups to MSK Cluster"
-      source_security_group_id = var.source_security_group_id_allowed
+      rule = "kafka-broker-tls-tcp"
+      cidr_blocks = var.cidr_blocks_allowed
     },
     {
-      from_port                = 9096
-      to_port                  = 9096
-      protocol                 = "tcp"
-      description              = "Allow security groups to MSK Cluster"
-      source_security_group_id = var.source_security_group_id_allowed
+      rule = "kafka-broker-tls-public-tcp"
+      cidr_blocks = var.cidr_blocks_allowed
     },
     {
-      from_port                = 9196
-      to_port                  = 9196
-      protocol                 = "tcp"
-      description              = "Allow security groups to MSK Cluster"
-      source_security_group_id = var.source_security_group_id_allowed
+      rule = "kafka-broker-sasl-scram-tcp"
+      cidr_blocks = var.cidr_blocks_allowed
     },
+    {
+      rule = "kafka-node-exporter-tcp"
+      cidr_blocks = var.cidr_blocks_allowed
+    },
+    {
+      rule = "kafka-jmx-exporter-tcp"
+      cidr_blocks = var.cidr_blocks_allowed
+    }    
   ]
 
   tags = {

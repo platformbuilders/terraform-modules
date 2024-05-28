@@ -58,6 +58,6 @@ variable "vpc_id" {
   description = "ID of the VPC where to create security group"
 }
 
-variable "source_security_group_id_allowed" {
+variable "cidr_blocks_allowed" {
   description = "Security groupid to allow connect with MSK Cluster"
 }
