@@ -42,6 +42,41 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private[count.index].id
 }
 
+resource "aws_subnet" "private_db" {
+  count = length(var.private_subnets_db)
+
+  availability_zone = element(var.azs, count.index)
+  cidr_block        = element(var.private_subnets_db, count.index)
+  vpc_id            = var.vpc_id
+
+  tags = merge(
+    var.additional_tags,
+    {
+      Name = format("${var.name}-private-db-subnet-%s", element(var.azs, count.index))
+    }
+  )
+}
+
+resource "aws_route_table" "private_db" {
+  count = length(var.private_subnets_db)
+
+  vpc_id = var.vpc_id
+
+  tags = merge(
+    var.additional_tags,
+    {
+      Name = format("${var.name}-private-rt-db-%s", element(var.azs, count.index))
+    }
+  )
+}
+
+resource "aws_route_table_association" "private_db" {
+  count = length(var.private_subnets_db)
+
+  subnet_id      = aws_subnet.private_db[count.index].id
+  route_table_id = aws_route_table.private_db[count.index].id
+}
+
 resource "aws_nat_gateway" "nat" {
   count = length(var.public_subnets)
 
