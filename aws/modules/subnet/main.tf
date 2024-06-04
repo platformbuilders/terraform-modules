@@ -31,7 +31,10 @@ resource "aws_route_table" "private" {
     var.additional_tags,
     {
       Name = format("${var.name}-private-rt-%s", element(var.azs, count.index))
-    }
+    },
+    var.eks_private_tag ? {
+      "kubernetes.io/role/internal-elb" = "1"
+    } : {},
   )
 }
 
@@ -107,6 +110,7 @@ resource "aws_subnet" "public" {
 
   availability_zone       = element(var.azs, count.index)
   cidr_block              = element(var.public_subnets, count.index)
+  ipv6_cidr_block         = element(var.public_subnets_ipv6, count.index)
   vpc_id                  = var.vpc_id
   map_public_ip_on_launch = true
 
@@ -114,7 +118,10 @@ resource "aws_subnet" "public" {
     var.additional_tags,
     {
       Name = format("${var.name}-public-subnet-%s", element(var.azs, count.index))
-    }
+    },
+    var.eks_public_tag ? {
+      "kubernetes.io/role/elb" = "1"
+    } : {},
   )
 }
 
