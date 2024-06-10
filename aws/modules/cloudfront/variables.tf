@@ -68,6 +68,18 @@ variable "forwarded_query_string" {
   default     = true
 }
 
+variable "forwarded_qcookies_string" {
+  description = "Indicates whether you want CloudFront to forward cookies (including headers and standard cookies) to the origin for the specified methods. If you choose true for any of the methods, CloudFront also forwards those cookies to the origin."
+  type        = string
+  default     = true
+}
+
+variable "cache_policy_id" {
+  description = "The unique identifier of the cache policy that is attached to the distribution. For more information, see Cache Policy IDs in the Amazon CloudFront Developer Guide."
+  type        = string
+  default     = ""
+}
+
 variable "forwarded_headers" {
   description = "Indicates whether you want CloudFront to forward headers to the origin."
   type        = list(string)
@@ -154,6 +166,35 @@ variable "aliases" {
 
 variable "response_headers_policy_id" {
   description = "The ID of the response headers policy to associate with this distribution."
+  type        = string
+  default     = null
+}
+
+variable "custom_error_response" {
+  description = "A list of one or more custom error response elements. For more information, see Custom Error Responses (https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html#alias-website-root). "
+  type = list(object({
+    error_caching_min_ttl = number,
+    error_code            = string,
+    response_page_path    = string,
+    response_code         = string,
+  }))
+  default = []
+}
+
+variable "default_cache_behavior_compress" {
+  description = "(Optional) Whether you want CloudFront to automatically compress certain files for this cache behavior. If so, specify true; if not, specify false."
+  type        = bool
+  default     = null
+}
+
+variable "origin_access_control_id" {
+  description = "The ID of the AWS Origin Access Control (OAC) to associate with this distribution."
+  type        = string
+  default     = null
+}
+
+variable "description" {
+  description = "(Optional) A comment about the distribution. If you don't specify a comment, the value is set to an empty string."
   type        = string
   default     = null
 }
