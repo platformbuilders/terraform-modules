@@ -12,6 +12,13 @@ resource "aws_security_group" "amazon_mq_sg" {
     cidr_blocks      = [var.vpc_cidr_block]
   }
 
+  ingress {
+    description      = "Allow https access from within VPC for RabbitMQ console"
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    cidr_blocks      = [var.vpc_cidr_block]
+  }
   egress {
     from_port        = 0
     to_port          = 0
