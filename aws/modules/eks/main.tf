@@ -22,6 +22,9 @@ module "eks" {
     vpc-cni = {
       resolve_conflicts = "OVERWRITE"
     }
+    aws-ebs-csi-driver ={
+      resolve_conflicts = "OVERWRITE"
+    }
   }
 
   cluster_security_group_additional_rules = {
