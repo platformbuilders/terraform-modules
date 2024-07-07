@@ -72,7 +72,9 @@ module "eks" {
       desired_size                 = var.eks_min_instance_node_group
       instance_types               = var.instance_type_list
       subnet_ids                   = concat(var.private_subnet_ids, var.public_subnet_ids)
-      iam_role_additional_policies = {}
+      iam_role_additional_policies = {
+        managed_policy_arns = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+        }
     }
   }
 
