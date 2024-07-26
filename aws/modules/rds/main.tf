@@ -20,6 +20,15 @@ resource "random_id" "snapshot_identifier" {
   byte_length = 4
 }
 
+resource "aws_db_subnet_group" "this" {
+  name       = var.identifier
+  subnet_ids = var.vpc_db_subnet_ids
+
+  tags = {
+    Name = format("%s-%s", "db-group", var.identifier)
+  }
+}
+
 resource "aws_db_instance" "this" {
   identifier = local.identifier
 
@@ -49,7 +58,7 @@ resource "aws_db_instance" "this" {
   master_user_secret_kms_key_id       = !local.is_replica && var.manage_master_user_password ? var.master_user_secret_kms_key_id : null
 
   vpc_security_group_ids = var.vpc_security_group_ids
-  db_subnet_group_name   = var.db_subnet_group_name
+  db_subnet_group_name   = aws_db_subnet_group.this.name
   parameter_group_name   = var.parameter_group_name
   option_group_name      = var.option_group_name
   network_type           = var.network_type

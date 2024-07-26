@@ -191,12 +191,6 @@ variable "vpc_security_group_ids" {
   default     = []
 }
 
-variable "db_subnet_group_name" {
-  description = "Name of DB subnet group. DB instance will be created in the VPC associated with the DB subnet group. If unspecified, will be created in the default VPC"
-  type        = string
-  default     = null
-}
-
 variable "parameter_group_name" {
   description = "Name of the DB parameter group to associate"
   type        = string
@@ -261,6 +255,12 @@ variable "create_monitoring_role" {
   description = "Create IAM role with a defined name that permits RDS to send enhanced monitoring metrics to CloudWatch Logs."
   type        = bool
   default     = false
+}
+
+variable "vpc_db_subnet_ids" {
+  description = "Ids of subnets"
+  type        = list(string)
+  default     = []
 }
 
 variable "allow_major_version_upgrade" {
