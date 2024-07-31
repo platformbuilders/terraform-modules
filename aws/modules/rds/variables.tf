@@ -430,3 +430,21 @@ variable "master_user_password_rotation_schedule_expression" {
   type        = string
   default     = null
 }
+
+variable "is_cluster" {
+  description = "Whether to create a cluster instead of an instance."
+  type        = bool
+  default     = false
+}
+
+variable "cluster_availability_zones" {
+  description = "The Availability Zone of the RDS instance"
+  type        = list(string)
+  default     = null
+}
+
+variable "cluster_intances_count" {
+  description = "Number of instances in cluster"
+  type        = number
+  default     = 2
+}
