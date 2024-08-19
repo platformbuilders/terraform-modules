@@ -8,7 +8,7 @@ locals {
   monitoring_role_name = var.monitoring_role_name
 
   is_replica = var.replicate_source_db != null
-  secret_id  = var.is_cluster ? null : aws_db_instance.this[0].master_user_secret[0].secret_arn
+  secret_id  = var.is_cluster ? null : length(aws_db_instance.this[0].master_user_secret) > 0 ? aws_db_instance.this[0].master_user_secret[0].secret_arn : null
 }
 
 data "aws_partition" "current" {}
