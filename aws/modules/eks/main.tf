@@ -22,8 +22,9 @@ module "eks" {
     vpc-cni = {
       resolve_conflicts = "OVERWRITE"
     }
-    aws-ebs-csi-driver ={
-      resolve_conflicts = "OVERWRITE"
+    aws-ebs-csi-driver = {
+      resolve_conflicts        = "OVERWRITE"
+      service_account_role_arn = var.ebs_service_account_role
     }
   }
 
@@ -67,14 +68,14 @@ module "eks" {
 
   eks_managed_node_groups = {
     "managed-ng-01" = {
-      min_size                     = var.eks_min_instance_node_group
-      max_size                     = var.eks_max_instance_node_group
-      desired_size                 = var.eks_min_instance_node_group
-      instance_types               = var.instance_type_list
-      subnet_ids                   = concat(var.private_subnet_ids, var.public_subnet_ids)
+      min_size       = var.eks_min_instance_node_group
+      max_size       = var.eks_max_instance_node_group
+      desired_size   = var.eks_min_instance_node_group
+      instance_types = var.instance_type_list
+      subnet_ids     = concat(var.private_subnet_ids, var.public_subnet_ids)
       iam_role_additional_policies = {
         managed_policy_arns = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
-        }
+      }
     }
   }
 

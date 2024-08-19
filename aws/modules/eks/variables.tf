@@ -69,3 +69,9 @@ variable "kms_key_administrators" {
   type        = list(string)
   default     = []
 }
+
+variable "ebs_service_account_role" {
+  description = "The role ARN used in service account to ebs addon"
+  type        = string
+  default     = null
+}

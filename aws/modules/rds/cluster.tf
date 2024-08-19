@@ -1,23 +1,3 @@
-# resource "aws_rds_cluster_instance" "this" {
-#   count              = var.is_cluster ? var.cluster_intances_count : 0
-#   identifier         = "${local.identifier}-${count.index}"
-#   cluster_identifier = aws_rds_cluster.this[0].id
-#   instance_class     = var.instance_class
-#   engine             = aws_rds_cluster.this[0].engine
-#   engine_version     = aws_rds_cluster.this[0].engine_version
-
-#   custom_iam_instance_profile           = var.custom_iam_instance_profile
-#   publicly_accessible                   = var.publicly_accessible
-#   ca_cert_identifier                    = var.ca_cert_identifier
-#   auto_minor_version_upgrade            = var.auto_minor_version_upgrade
-#   performance_insights_enabled          = var.performance_insights_enabled
-#   performance_insights_retention_period = var.performance_insights_enabled ? var.performance_insights_retention_period : null
-#   performance_insights_kms_key_id       = var.performance_insights_enabled ? var.performance_insights_kms_key_id : null
-
-#   monitoring_interval = var.monitoring_interval
-#   monitoring_role_arn = var.monitoring_interval > 0 ? local.monitoring_role_arn : null
-# }
-
 resource "aws_rds_cluster" "this" {
   count              = var.is_cluster ? 1 : 0
   cluster_identifier = local.identifier
