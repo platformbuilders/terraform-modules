@@ -1,6 +1,8 @@
 resource "aws_security_group" "ssh" {
   name        = "vpnconnector-allow-ssh-sg"
   description = "Security group for SSH access"
+  
+  vpc_id = var.vpc_id
 
   ingress {
     description      = "Allow SSH from my IP"
@@ -28,6 +30,10 @@ resource "aws_instance" "ec2" {
 
 
   vpc_security_group_ids = [aws_security_group.ssh.id]
+  root_block_device {
+    volume_size = var.disk_size
+    volume_type = var.volume_type
+  }
 
   tags = merge(var.tags, {
     Name = var.instance_name
