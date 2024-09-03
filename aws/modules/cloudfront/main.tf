@@ -1,3 +1,68 @@
+resource "aws_cloudfront_response_headers_policy" "_" {
+  count = var.response_headers_policy_id == null ? 1 : 0
+  name  = "${var.description}-headers-policy"
+
+  cors_config {
+    access_control_allow_credentials = false
+    access_control_max_age_sec       = 600
+    origin_override                  = true
+
+    access_control_allow_headers {
+      items = [
+        "*",
+      ]
+    }
+
+    access_control_allow_methods {
+      items = [
+        "ALL",
+      ]
+    }
+
+    access_control_allow_origins {
+      items = [
+        "*",
+      ]
+    }
+  }
+  custom_headers_config {
+    items {
+      header   = "Permissions-Policy"
+      override = true
+      value    = "()"
+    }
+  }
+
+  security_headers_config {
+    content_security_policy {
+      content_security_policy = "frame-ancestors 'self'"
+      override                = true
+    }
+    content_type_options {
+      override = true
+    }
+    frame_options {
+      frame_option = "SAMEORIGIN"
+      override     = true
+    }
+    referrer_policy {
+      override        = true
+      referrer_policy = "strict-origin"
+    }
+    strict_transport_security {
+      access_control_max_age_sec = 31536000
+      include_subdomains         = false
+      override                   = true
+      preload                    = false
+    }
+    xss_protection {
+      mode_block = true
+      override   = true
+      protection = true
+    }
+  }
+
+}
 resource "aws_cloudfront_distribution" "cloudfront_distribution" {
   enabled             = true
   comment             = var.description
@@ -44,7 +109,7 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
     allowed_methods            = var.allowed_methods
     cached_methods             = var.cached_methods
     target_origin_id           = var.origin_type == "elb" ? "ELBOriginID" : "S3OriginID"
-    response_headers_policy_id = var.response_headers_policy_id
+    response_headers_policy_id = var.response_headers_policy_id == null ? aws_cloudfront_response_headers_policy._[0].id : var.response_headers_policy_id
     cache_policy_id            = var.cache_policy_id
     compress                   = var.default_cache_behavior_compress
 
