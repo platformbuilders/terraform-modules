@@ -24,13 +24,7 @@ resource "google_composer_environment" "composer" {
 
     software_config {
       image_version = var.image_version
-
-      env_variables = merge(
-        var.env_variables, {
-          "AIRFLOW_ENV"     = "production"
-          "LD_LIBRARY_PATH" = "/home/airflow/gcs/plugins/oracle/instantclient_12_2"
-        }
-      )
+      env_variables = var.env_variables
 
       airflow_config_overrides = merge(
         var.airflow_config_overrides, {
