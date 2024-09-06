@@ -82,3 +82,46 @@ variable "pypi_packages" {
     "fastavro"                                 = "==1.6.0"
   }
 }
+
+variable "workloads_config" {
+  type = object({
+    scheduler = object({
+      cpu        = number
+      memory_gb  = number
+      storage_gb = number
+      count      = number
+    }),
+    web_server = object({
+      cpu        = number
+      memory_gb  = number
+      storage_gb = number
+    }),
+    worker = object({
+      cpu        = number
+      memory_gb  = number
+      storage_gb = number
+      min_count  = number
+      max_count  = number
+    })
+  })
+  default = {
+    scheduler = {
+      cpu        = 2
+      memory_gb  = 2
+      storage_gb = 1
+      count      = 1
+    }
+    web_server = {
+      cpu        = 0.5
+      memory_gb  = 1.875
+      storage_gb = 1
+    }
+    worker = {
+      cpu        = 1
+      memory_gb  = 6.5
+      storage_gb = 1
+      min_count  = 1
+      max_count  = 3
+    }
+  }
+}
