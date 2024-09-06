@@ -43,22 +43,22 @@ resource "google_composer_environment" "composer" {
 
     workloads_config {
       scheduler {
-        cpu        = 2
-        memory_gb  = 2
-        storage_gb = 1
-        count      = 1
+        cpu        = var.workloads_config.scheduler.cpu
+        memory_gb  = var.workloads_config.scheduler.memory_gb
+        storage_gb = var.workloads_config.scheduler.storage_gb
+        count      = var.workloads_config.scheduler.count
       }
       web_server {
-        cpu        = 0.5
-        memory_gb  = 1.875
-        storage_gb = 1
+        cpu        = var.workloads_config.web_server.cpu
+        memory_gb  = var.workloads_config.web_server.memory_gb
+        storage_gb = var.workloads_config.web_server.storage_gb
       }
       worker {
-        cpu        = 1
-        memory_gb  = 6.5
-        storage_gb = 1
-        min_count  = 1
-        max_count  = 3
+        cpu        = var.workloads_config.worker.cpu
+        memory_gb  = var.workloads_config.worker.memory_gb
+        storage_gb = var.workloads_config.worker.storage_gb
+        min_count  = var.workloads_config.worker.min_count
+        max_count  = var.workloads_config.worker.max_count
       }
     }
   }
