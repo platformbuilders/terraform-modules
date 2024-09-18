@@ -1,6 +1,6 @@
 resource "random_password" "password" {
-  length           = 16
-  special          = false
+  length  = 16
+  special = false
 }
 
 module "msk_cluster" {
@@ -12,6 +12,11 @@ module "msk_cluster" {
   enhanced_monitoring    = "PER_TOPIC_PER_PARTITION"
 
   broker_node_client_subnets = var.subnet_ids
+  broker_node_connectivity_info = {
+    public_access = {
+      type = var.public_access ? "SERVICE_PROVIDED_EIPS" : "DISABLED"
+    }
+  }
   broker_node_storage_info = {
     ebs_storage_info = { volume_size = "${var.broker_volume_size}" }
   }
@@ -28,8 +33,9 @@ module "msk_cluster" {
   configuration_name        = "${var.name}-configuration"
   configuration_description = "Basic Configuration of the cluster"
   configuration_server_properties = {
-    "auto.create.topics.enable" = true
-    "delete.topic.enable"       = true
+    "allow.everyone.if.no.acl.found" = false
+    "auto.create.topics.enable"      = true
+    "delete.topic.enable"            = true
   }
 
   jmx_exporter_enabled    = var.jmx_enabled
@@ -68,8 +74,8 @@ module "secrets_manager" {
   ignore_secret_changes = false
   kms_key_id            = module.kms.key_arn
   secret_string = jsonencode({
-    "username": "kafka",
-    "password": "${random_password.password.result}"
+    "username" : "kafka",
+    "password" : "${random_password.password.result}"
   })
   tags = {
     environment = var.environment
@@ -88,7 +94,7 @@ module "kms" {
   key_administrators = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/kafka.amazonaws.com/AWSServiceRoleForKafka"]
 
   # Aliases
-  aliases = ["msk/${var.name}"]
+  aliases                 = ["msk/${var.name}"]
   aliases_use_name_prefix = false
 
   tags = {
@@ -119,29 +125,29 @@ module "broker_security_group" {
 
   ingress_with_cidr_blocks = [
     {
-      rule = "kafka-broker-tcp"
+      rule        = "kafka-broker-tcp"
       cidr_blocks = var.cidr_blocks_allowed
     },
     {
-      rule = "kafka-broker-tls-tcp"
+      rule        = "kafka-broker-tls-tcp"
       cidr_blocks = var.cidr_blocks_allowed
     },
     {
-      rule = "kafka-broker-tls-public-tcp"
+      rule        = "kafka-broker-tls-public-tcp"
       cidr_blocks = var.cidr_blocks_allowed
     },
     {
-      rule = "kafka-broker-sasl-scram-tcp"
+      rule        = "kafka-broker-sasl-scram-tcp"
       cidr_blocks = var.cidr_blocks_allowed
     },
     {
-      rule = "kafka-node-exporter-tcp"
+      rule        = "kafka-node-exporter-tcp"
       cidr_blocks = var.cidr_blocks_allowed
     },
     {
-      rule = "kafka-jmx-exporter-tcp"
+      rule        = "kafka-jmx-exporter-tcp"
       cidr_blocks = var.cidr_blocks_allowed
-    }    
+    }
   ]
 
   tags = {

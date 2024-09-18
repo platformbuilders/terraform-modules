@@ -61,3 +61,9 @@ variable "vpc_id" {
 variable "cidr_blocks_allowed" {
   description = "Security groupid to allow connect with MSK Cluster"
 }
+
+variable "public_access" {
+  description = "Indicates whether you want to enable or disable public access to the cluster"
+  type        = bool
+  default     = false
+}
