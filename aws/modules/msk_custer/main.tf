@@ -33,7 +33,7 @@ module "msk_cluster" {
   configuration_name        = "${var.name}-configuration"
   configuration_description = "Basic Configuration of the cluster"
   configuration_server_properties = {
-    "allow.everyone.if.no.acl.found" = false
+    "allow.everyone.if.no.acl.found" = !var.public_access
     "auto.create.topics.enable"      = true
     "delete.topic.enable"            = true
   }
@@ -115,14 +115,6 @@ module "broker_security_group" {
       cidr_blocks = "0.0.0.0/0"
     },
   ]
-
-
-
-
-
-
-
-
   ingress_with_cidr_blocks = [
     {
       rule        = "kafka-broker-tcp"
