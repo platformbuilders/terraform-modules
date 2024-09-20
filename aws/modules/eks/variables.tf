@@ -40,19 +40,10 @@ variable "disk_size_gb" {
   type        = string
 }
 
-variable "instance_type_list" {
+variable "instance_type" {
   description = "Lista de tipos de instância permitidos para os grupos de nodes gerenciados."
   type        = list(string)
-}
-
-variable "eks_min_instance_node_group" {
-  description = "Número mínimo de instâncias para os grupos de nodes gerenciados."
-  type        = number
-}
-
-variable "eks_max_instance_node_group" {
-  description = "Número máximo de instâncias para os grupos de nodes gerenciados."
-  type        = number
+  default     = ["t3a.xlarge"]
 }
 
 variable "additional_roles" {
@@ -75,3 +66,14 @@ variable "ebs_service_account_role" {
   type        = string
   default     = null
 }
+
+variable "eks_node_groups" {
+  type = map(object({
+    min_size                   = number
+    max_size                   = number
+    desired_size               = number
+    instance_types             = list(string)
+    disk_size                  = number
+    use_custom_launch_template = bool
+  }))
+} 
