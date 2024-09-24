@@ -110,7 +110,7 @@ resource "aws_subnet" "public" {
 
   availability_zone       = element(var.azs, count.index)
   cidr_block              = element(var.public_subnets, count.index)
-  ipv6_cidr_block         = element(var.public_subnets_ipv6, count.index)
+  ipv6_cidr_block         = try(element(var.public_subnets_ipv6, count.index), null)
   vpc_id                  = var.vpc_id
   map_public_ip_on_launch = true
 
