@@ -1,10 +1,11 @@
 resource "google_compute_subnetwork" "_" {
-  project       = var.project_id
-  
-  name          = var.name
-  network       = var.network
-  ip_cidr_range = var.cidr
-  region        = var.region
+  project = var.project_id
+
+  name                     = var.name
+  network                  = var.network
+  ip_cidr_range            = var.cidr
+  region                   = var.region
+  private_ip_google_access = var.private_ip_google_access
 }
 
 resource "google_compute_router" "_" {
