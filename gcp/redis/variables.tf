@@ -26,3 +26,8 @@ variable "display_name" {
 variable "authorized_network" {
   description = "VPC authorized to access Redis"
 }
+
+variable "project_id" {
+  type        = string
+  description = "The project ID to manage"
+}
