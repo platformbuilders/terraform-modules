@@ -1,7 +1,11 @@
-output "cache_nodes" {
-  value = aws_elasticache_cluster.this.cache_nodes
+output "arn" {
+  value = aws_elasticache_replication_group.default.arn
 }
 
-output "instance_id" {
-  value = aws_elasticache_cluster.this.id
+output "id" {
+  value = aws_elasticache_replication_group.default.id
+}
+
+output "primary_endpoint_address" {
+  value = aws_elasticache_replication_group.default.primary_endpoint_address
 }
