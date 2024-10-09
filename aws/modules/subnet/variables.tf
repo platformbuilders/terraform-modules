@@ -44,6 +44,12 @@ variable "azs" {
   description = "The az"
 }
 
+variable "nat_gateway_az" {
+  type = bool
+  description = "Option to create a natgateway multi-az or not"
+  default = true
+}
+
 variable "single_nat_gateway" {
   description = "Should be true if you want to provision a single shared NAT Gateway across all of your private networks"
   type        = bool
