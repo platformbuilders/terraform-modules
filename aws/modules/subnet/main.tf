@@ -31,7 +31,10 @@ resource "aws_route_table" "private" {
     var.additional_tags,
     {
       Name = format("${var.name}-private-rt-%s", element(var.azs, count.index))
-    }
+    },
+    var.eks_private_tag ? {
+      "kubernetes.io/role/internal-elb" = "1"
+    } : {},
   )
 }
 
@@ -42,11 +45,46 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private[count.index].id
 }
 
+resource "aws_subnet" "private_db" {
+  count = length(var.private_subnets_db)
+
+  availability_zone = element(var.azs, count.index)
+  cidr_block        = element(var.private_subnets_db, count.index)
+  vpc_id            = var.vpc_id
+
+  tags = merge(
+    var.additional_tags,
+    {
+      Name = format("${var.name}-private-db-subnet-%s", element(var.azs, count.index))
+    }
+  )
+}
+
+resource "aws_route_table" "private_db" {
+  count = length(var.private_subnets_db)
+
+  vpc_id = var.vpc_id
+
+  tags = merge(
+    var.additional_tags,
+    {
+      Name = format("${var.name}-private-rt-db-%s", element(var.azs, count.index))
+    }
+  )
+}
+
+resource "aws_route_table_association" "private_db" {
+  count = length(var.private_subnets_db)
+
+  subnet_id      = aws_subnet.private_db[count.index].id
+  route_table_id = aws_route_table.private_db[count.index].id
+}
+
 resource "aws_nat_gateway" "nat" {
-  count = length(var.private_subnets)
+  count = var.nat_gateway_az ? length(var.public_subnets) : 1
 
   allocation_id = aws_eip.nat[count.index].id
-  subnet_id     = aws_subnet.private[count.index].id
+  subnet_id     = aws_subnet.public[count.index].id
 
   tags = merge(
     var.additional_tags,
@@ -72,6 +110,7 @@ resource "aws_subnet" "public" {
 
   availability_zone       = element(var.azs, count.index)
   cidr_block              = element(var.public_subnets, count.index)
+  ipv6_cidr_block         = try(element(var.public_subnets_ipv6, count.index), null)
   vpc_id                  = var.vpc_id
   map_public_ip_on_launch = true
 
@@ -79,7 +118,10 @@ resource "aws_subnet" "public" {
     var.additional_tags,
     {
       Name = format("${var.name}-public-subnet-%s", element(var.azs, count.index))
-    }
+    },
+    var.eks_public_tag ? {
+      "kubernetes.io/role/elb" = "1"
+    } : {},
   )
 }
 
@@ -120,5 +162,5 @@ resource "aws_route" "private_nat_gateway" {
 
   route_table_id         = aws_route_table.private[count.index].id
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.nat[count.index].id
+  nat_gateway_id         = var.nat_gateway_az ? aws_nat_gateway.nat[count.index].id : aws_nat_gateway.nat[0].id
 }

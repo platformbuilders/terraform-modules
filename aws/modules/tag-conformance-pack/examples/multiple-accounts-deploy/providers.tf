@@ -3,7 +3,7 @@ provider "aws" {
   region  = var.region
   default_tags {
     tags = {
-      git-location = "https://gitlab.com/raiadrogasil/rd/devops-rd/finopstools/tagconformacepack"
+      git-location = "https://gitlab.com/company/rd/devops-rd/finopstools/tagconformacepack"
       application  = var.tags["application"]
       domain       = var.tags["domain"]
       board        = var.tags["board"]

@@ -25,7 +25,7 @@ tags = {
   application = "config"
   domain      = "infrastructure"
   board       = "demo"
-  company     = "rd"
+  company     = "company"
   shared      = "no"
   env         = "qa"
   tag_created = "iac"
@@ -114,7 +114,7 @@ Solução pronta da aws: aws config required-tags (managed rule). Possui quantid
 
 ## Custom lambda required-tags config
 
-O custom lambda required-tags é uma regra do aws config customizada. É implementada uma função lambda que realiza a validação das tags para cada recurso avaliado e para os recursos fora de compliance é disparada uma ação de remediação via ssm document automation da mesma forma que a regra gerenciada da aws. Ambos, esta regra do aws config e a regra gerenciada estão contidas no conformance pack. Este recurso abrange todos os [recursos suportados pelo aws config](Iniciativas%2046509273c2284bb0870fa758affd34c1/Raia%20Drogasil%20-%20Squad%20FinOps%205c1ceba1ca5845abb0d0d888682d4adf/Board%20Temp%20b2c1ec192de84bdbb5843872d4495fc8/RD%20MultiCloud%20Tagueamento%20-%20TMC%205866e19979f9419096b471f57a013a2e.md).
+O custom lambda required-tags é uma regra do aws config customizada. É implementada uma função lambda que realiza a validação das tags para cada recurso avaliado e para os recursos fora de compliance é disparada uma ação de remediação via ssm document automation da mesma forma que a regra gerenciada da aws. Ambos, esta regra do aws config e a regra gerenciada estão contidas no conformance pack. Este recurso abrange todos os [recursos suportados pelo aws config](Iniciativas%2046509273c2284bb0870fa758affd34c1/Company%20-%20Squad%20FinOps%205c1ceba1ca5845abb0d0d888682d4adf/Board%20Temp%20b2c1ec192de84bdbb5843872d4495fc8/RD%20MultiCloud%20Tagueamento%20-%20TMC%205866e19979f9419096b471f57a013a2e.md).
 
 ```mermaid
 graph TD

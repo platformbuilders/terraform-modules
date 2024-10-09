@@ -52,3 +52,9 @@ variable "nat_log_filter" {
   description = "Specifies the desired filtering of logs on this NAT. Possible values are: ERRORS_ONLY, TRANSLATIONS_ONLY, ALL (Only work if have_nat is true)"
   default     = "ERRORS_ONLY"
 }
+
+variable "private_ip_google_access" {
+  type        = bool
+  description = "When enabled, VMs in this subnetwork without external IP addresses can access Google APIs and services by using Private Google Access."
+  default     = false
+}

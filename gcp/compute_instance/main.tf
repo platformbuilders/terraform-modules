@@ -29,6 +29,7 @@ resource "google_compute_instance" "_" {
       for_each = var.external_access ? [1] : []
       content {
         network_tier = "PREMIUM"
+        nat_ip       = google_compute_address.default.address
       }
     }
   }
@@ -46,7 +47,16 @@ resource "google_compute_instance" "_" {
     }
   }
 
-  resource_policies = var.resource_policies
+  resource_policies = concat(
+    var.resource_policies,
+    var.schedule_shutdown ? [google_compute_resource_policy.shutdown-policy.0.id] : []
+  )
+}
+
+resource "google_compute_address" "default" {
+  project = var.project_id
+  name    = "${var.name}-address"
+  region  = var.region
 }
 
 resource "google_compute_resource_policy" "shutdown-policy" {
