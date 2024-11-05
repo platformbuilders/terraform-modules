@@ -81,7 +81,7 @@ resource "aws_route_table_association" "private_db" {
 }
 
 resource "aws_nat_gateway" "nat" {
-  count = var.nat_gateway_az ? length(var.public_subnets) : 1
+  count = var.nat_gateway_az ? length(var.public_subnets) : 0
 
   allocation_id = aws_eip.nat[count.index].id
   subnet_id     = aws_subnet.public[count.index].id
