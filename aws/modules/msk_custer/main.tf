@@ -1,3 +1,7 @@
+locals {
+  kafka_role_exists = length([for role in data.aws_iam_roles.existing_roles.names : role if role == "AWSServiceRoleForKafka"]) > 0
+}
+
 resource "random_password" "password" {
   length  = 16
   special = false
@@ -82,6 +86,33 @@ module "secrets_manager" {
   }
 
   depends_on = [module.kms]
+}
+
+resource "aws_iam_role" "kafka_service_role" {
+  count = local.kafka_role_exists ? 0 : 1
+  name               = "AWSServiceRoleForKafka"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement: [
+      {
+        Effect    = "Allow"
+        Principal = {
+          Service = "kafka.amazonaws.com"
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+
+  tags = {
+    Name = "KafkaServiceRole"
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "attach_policy" {
+  count      = local.kafka_role_exists ? 0 : 1
+  role       = aws_iam_role.kafka_service_role[0].name
+  policy_arn = data.aws_iam_policy.kafka_service_policy.arn
 }
 
 module "kms" {
