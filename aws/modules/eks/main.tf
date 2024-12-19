@@ -81,7 +81,7 @@ module "eks" {
     }
   }
 
-  manage_aws_auth_configmap = false
+  manage_aws_auth_configmap = var.manage_aws_auth_configmap
 
   aws_auth_roles = var.additional_roles
 

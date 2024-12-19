@@ -77,3 +77,8 @@ variable "eks_node_groups" {
     use_custom_launch_template = bool
   }))
 } 
+
+variable "manage_aws_auth_configmap" {
+  description = "If true, the aws-auth configMap will be created and managed by this module. If false, the aws-auth configMap will not be created or managed."
+  default = false
+}
