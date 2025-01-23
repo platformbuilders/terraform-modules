@@ -115,3 +115,9 @@ variable "schedule_shutdown_time_zone" {
   description = "Time zone of cron time"
   default     = "America/Sao_Paulo"
 }
+
+variable "can_ip_forward" {
+  type        = bool
+  description = "Define if instance can receive ip forward"
+  default     = false
+}

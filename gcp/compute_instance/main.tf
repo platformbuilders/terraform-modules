@@ -10,6 +10,8 @@ resource "google_compute_instance" "_" {
     project = var.name
   }
 
+  can_ip_forward = var.can_ip_forward
+
   # windows
   boot_disk {
     initialize_params {
