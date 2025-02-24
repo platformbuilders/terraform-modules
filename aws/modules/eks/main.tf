@@ -86,5 +86,5 @@ module "eks" {
 
   aws_auth_roles = var.additional_roles
 
-  aws_auth_users = []
+  aws_auth_users = var.aws_auth_users
 }

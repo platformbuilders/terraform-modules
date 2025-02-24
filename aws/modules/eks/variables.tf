@@ -88,3 +88,9 @@ variable "enable_irsa" {
   type        = bool
   default     = false
 }
+
+variable "aws_auth_users" {
+  description = "Additional IAM users to add to the aws-auth configmap."
+  type        = list(any)
+  default     = []
+}
