@@ -25,18 +25,18 @@ variable "instance_tier" {
 }
 
 variable "edition" {
-  description = "Edition database"
+  description = "Edition database" # ENTERPRISE or ENTERPRISE PLUS
   type        = string
 }
 
 variable "psc_enabled" {
   description = "Set to true to enable private IP"
-  type        = string
+  type        = bool
 }
 
 variable "backup_configuration" {
   description = "Set to true to enable backup"
-  type        = string
+  type        = bool
 }
 
 variable "start_time" {
@@ -47,4 +47,15 @@ variable "start_time" {
 variable "availability_type" {
   description = "Set the availability type of the database" # ZONAL or REGIONAL
   type        = string
+}
+
+variable "vpc_self_link" {
+  description = "The VPC self link"
+  type        = string
+}
+
+variable "ipv4_enabled" {
+  description = "Set to true to enable IPv4"
+  type        = bool
+  default = "false"
 }

@@ -1,7 +1,3 @@
-locals {
-  vpc_self_link = "projects/${var.project_id}/global/networks/${var.name}-net"
-}
-
 resource "google_sql_database_instance" "main" {
   name             = "${var.name}-postgres"
   database_version = var.postgres_version
@@ -17,12 +13,12 @@ resource "google_sql_database_instance" "main" {
         allowed_consumer_projects = [var.project_id]
 
         psc_auto_connections {
-          consumer_network            = local.vpc_self_link
+          consumer_network            = var.vpc_self_link
           consumer_service_project_id = var.project_id
         }
       }
 
-      ipv4_enabled = false
+      ipv4_enabled = var.ipv4_enabled
     }
 
     backup_configuration {
