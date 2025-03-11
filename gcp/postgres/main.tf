@@ -8,15 +8,15 @@ resource "google_sql_database_instance" "main" {
     edition = var.edition
 
     ip_configuration {
-      psc_config {
-        psc_enabled               = var.psc_enabled
-        allowed_consumer_projects = [var.project_id]
+      # psc_config {
+      #   psc_enabled               = var.psc_enabled
+      #   allowed_consumer_projects = [var.project_id]
 
-        psc_auto_connections {
-          consumer_network            = var.vpc_self_link
-          consumer_service_project_id = var.project_id
-        }
-      }
+      #   psc_auto_connections {
+      #     consumer_network            = var.vpc_self_link
+      #     consumer_service_project_id = var.project_id
+      #   }
+      # }
 
       ipv4_enabled = var.ipv4_enabled
     }
