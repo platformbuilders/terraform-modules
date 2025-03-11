@@ -57,5 +57,4 @@ variable "vpc_self_link" {
 variable "ipv4_enabled" {
   description = "Set to true to enable IPv4"
   type        = bool
-  default = "false"
 }
