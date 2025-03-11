@@ -20,6 +20,8 @@ module "postgres" {
   backup_configuration = var.backup_configuration
   start_time        = var.start_time
   availability_type = var.availability_type
+  vpc_self_link        = var.vpc_self_link
+  ipv4_enabled         = var.ipv4_enabled
 }
 ```
 
@@ -54,6 +56,10 @@ Para usar este modulo, você vai precisar passar as seguintes variáveis:
 `start_time`
 
 `availability_type`
+
+`vpc_self_link`
+
+`ipv4_enabled`
 
 * Caso psc_enabled seja definida como `true` é necessário fazer o setup das seguintes configurações no mesmo manifesto:
 
