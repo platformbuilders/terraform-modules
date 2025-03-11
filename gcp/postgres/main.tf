@@ -8,6 +8,7 @@ resource "google_sql_database_instance" "main" {
     edition = var.edition
 
     ip_configuration {
+      # Fazer setup de Private Service Connect para habilitar IP privado aqui
       # psc_config {
       #   psc_enabled               = var.psc_enabled
       #   allowed_consumer_projects = [var.project_id]
