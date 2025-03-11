@@ -1,6 +1,6 @@
 output "db_instance_name" {
   description = "Name of the Cloud SQL instance"
-  value       = google_sql_database_instance.main.name
+  value       = module.postgres.db_instance_name
 }
 
 # Habilitar quando psc_enabled = true
