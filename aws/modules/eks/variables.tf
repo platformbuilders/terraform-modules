@@ -94,3 +94,8 @@ variable "aws_auth_users" {
   type        = list(any)
   default     = []
 }
+
+variable "cloudwatch_log_group_retention_in_days" {
+  description = "Number of days to retain CloudWatch logs for EKS control plane"
+  default     = 7
+}

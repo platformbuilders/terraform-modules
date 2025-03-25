@@ -10,7 +10,7 @@ module "eks" {
   cluster_endpoint_private_access = var.endpoint_private_access
   cluster_endpoint_public_access  = var.endpoint_public_access
   kms_key_administrators          = var.kms_key_administrators
-  enable_irsa = var.enable_irsa
+  enable_irsa                     = var.enable_irsa
 
   cluster_addons = {
     coredns = {
@@ -52,6 +52,8 @@ module "eks" {
       source_cluster_security_group = true
     }
   }
+
+  cloudwatch_log_group_retention_in_days = var.cloudwatch_log_group_retention_in_days
 
   # cluster_encryption_config = [{
   #   provider_key_arn = aws_kms_key.secret_encrypt.arn
