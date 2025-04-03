@@ -5,6 +5,8 @@ resource "aws_mq_configuration" "_" {
   engine_version = var.engine_version
 
   data = var.configuration
+
+  tags = var.additional_tags
 }
 
 resource "aws_mq_broker" "_" {
@@ -23,6 +25,8 @@ resource "aws_mq_broker" "_" {
   security_groups    = [aws_security_group.amazon_mq_sg.id]
 
   subnet_ids = var.subnet_ids
+
+  tags = var.additional_tags
 
   user {
     username = var.username

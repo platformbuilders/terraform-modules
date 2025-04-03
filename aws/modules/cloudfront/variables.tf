@@ -198,3 +198,9 @@ variable "description" {
   type        = string
   default     = null
 }
+
+variable "tags" {
+  description = "Tags to apply to the distribution."
+  type        = map(string)
+  default     = null
+}

@@ -67,3 +67,9 @@ variable "public_access" {
   type        = bool
   default     = false
 }
+
+variable "tags" {
+  description = "Tags to apply to the MSK cluster"
+  type        = map(string)
+  default     = {}
+}

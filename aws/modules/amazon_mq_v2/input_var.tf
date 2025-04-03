@@ -59,7 +59,7 @@ variable "password" {
 variable "additional_tags" {
   description = "Additional tags"
   type        = map(string)
-  default     = {}
+  default     = null
 }
 
 variable "mq_broker_allowed_security_groups" {

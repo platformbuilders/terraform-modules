@@ -77,3 +77,9 @@ variable "apply_immediately" {
   description = "Specifies whether data modifications should be applied immediately, or during the next maintenance window."
   default     = false
 }
+
+variable "additional_tags" {
+  description = "Tags to apply to the elasticache."
+  type        = map(string)
+  default     = null
+}
