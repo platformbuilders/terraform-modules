@@ -71,6 +71,8 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
   web_acl_id          = var.web_acl_id
   aliases             = var.aliases
 
+  tags = var.tags
+
   dynamic "origin" {
     for_each = var.origin_type == "elb" ? [1] : []
 

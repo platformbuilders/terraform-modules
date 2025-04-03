@@ -52,9 +52,7 @@ module "msk_cluster" {
     module.secrets_manager.secret_arn
   ]
 
-  tags = {
-    environment = var.environment
-  }
+  tags = var.tags
 
   depends_on = [module.broker_security_group, module.secrets_manager]
 
@@ -97,9 +95,8 @@ module "kms" {
   aliases                 = ["msk/${var.name}"]
   aliases_use_name_prefix = false
 
-  tags = {
-    environment = var.environment
-  }
+  tags = var.tags
+
 }
 
 module "broker_security_group" {
@@ -142,10 +139,9 @@ module "broker_security_group" {
     }
   ]
 
-  tags = {
-    environment = var.environment
-  }
+  tags = var.tags
 
 }
+
 
 
