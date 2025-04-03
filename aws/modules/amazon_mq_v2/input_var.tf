@@ -57,25 +57,9 @@ variable "password" {
 }
 
 variable "additional_tags" {
-  description = "Additional tags to add to all resources. Can receive values from other resources."
-  type = object({
-    Environment = string
-    Project     = string
-    Owner       = string
-    ManagedBy   = string
-    CostCenter  = string
-    Service     = string
-    Terraform   = string
-  })
-  default = {
-    Environment = "development"
-    Project     = "default"
-    Owner       = "terraform"
-    ManagedBy   = "terraform"
-    CostCenter  = "default"
-    Service     = "amazon-mq"
-    Terraform   = "true"
-  }
+  description = "Additional tags"
+  type        = map(string)
+  default     = null
 }
 
 variable "mq_broker_allowed_security_groups" {
