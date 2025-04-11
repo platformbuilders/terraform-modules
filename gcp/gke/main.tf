@@ -28,7 +28,7 @@ resource "google_container_cluster" "_" {
       for_each = var.master_authorized_networks_config
 
       content {
-        cidr_block = each.value
+        cidr_block = cidr_blocks.value
       }
     }
   }
