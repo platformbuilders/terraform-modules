@@ -13,11 +13,3 @@ output "nodes_locations" {
 output "initial_node_count" {
   value = google_container_node_pool._.initial_node_count
 }
-
-output "min_node_count" {
-  value = google_container_node_pool._.autoscaling.0.min_node_count
-}
-
-output "max_node_count" {
-  value = google_container_node_pool._.autoscaling.0.max_node_count
-}
