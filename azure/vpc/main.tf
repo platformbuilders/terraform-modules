@@ -40,13 +40,13 @@ resource "azurerm_storage_account" "flow_log_storage" {
   location                 = var.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
-  min_tls_version         = "TLS1_2"
+  min_tls_version          = "TLS1_2"
   tags                     = var.tags
 }
 
 resource "azurerm_network_watcher_flow_log" "flow_log" {
   count = var.enable_flow_log ? 1 : 0
-  
+
   name                      = "${var.vnet_name}-flow-logs"
   network_watcher_name      = "NetworkWatcher_${var.location}"
   resource_group_name       = "NetworkWatcherRG"

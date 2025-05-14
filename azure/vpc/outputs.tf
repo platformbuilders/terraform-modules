@@ -37,13 +37,3 @@ output "flow_log_workspace_id" {
   description = "ID do workspace do Log Analytics para Flow Logs"
   value       = var.enable_flow_log ? azurerm_log_analytics_workspace.flow_log_workspace[0].id : null
 }
-
-output "subnet_ids" {
-  description = "Mapa de IDs das subnets criadas"
-  value       = { for k, v in azurerm_subnet.subnets : k => v.id }
-}
-
-output "nsg_ids" {
-  description = "Mapa de IDs dos Network Security Groups criados"
-  value       = { for k, v in azurerm_network_security_group.nsg : k => v.id }
-} 

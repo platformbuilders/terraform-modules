@@ -18,17 +18,17 @@ output "nat_gateway_public_ip" {
   value       = length(var.private_subnets) > 0 ? azurerm_public_ip.nat_gateway_ip[0].ip_address : null
 }
 
-output "private_route_table_id" {
-  description = "ID da Route Table criada para as subnets privadas"
-  value       = length(var.private_subnets) > 0 ? azurerm_route_table.private_route_table[0].id : null
-}
+# output "private_route_table_id" {
+#   description = "ID da Route Table criada para as subnets privadas"
+#   value       = length(var.private_subnets) > 0 ? azurerm_route_table.private_route_table[0].id : null
+# }
 
 output "public_subnet_ids" {
   description = "Mapa de IDs das subnets públicas"
-  value       = { for k, v in azurerm_subnet.subnets : k => v.id if var.public_subnets[k] != null }
+  value       = { for k, v in azurerm_subnet.subnets : k => v.id if contains(keys(var.public_subnets), k) }
 }
 
 output "private_subnet_ids" {
   description = "Mapa de IDs das subnets privadas"
-  value       = { for k, v in azurerm_subnet.subnets : k => v.id if var.private_subnets[k] != null }
+  value       = { for k, v in azurerm_subnet.subnets : k => v.id if contains(keys(var.private_subnets), k) }
 } 

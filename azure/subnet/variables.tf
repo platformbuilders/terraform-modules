@@ -21,9 +21,9 @@ variable "availability_zones" {
 variable "public_subnets" {
   description = "Mapa de subnets públicas a serem criadas"
   type = map(object({
-    name             = string
-    cidr_block       = string
-    az_index         = number
+    name              = string
+    cidr_block        = string
+    az_index          = number
     service_endpoints = optional(list(string), [])
     nsg_rules = optional(list(object({
       name                       = string
@@ -36,6 +36,7 @@ variable "public_subnets" {
       source_address_prefix      = string
       destination_address_prefix = string
     })), [])
+    enable_route_table = optional(bool, true)
   }))
   default = {}
 }
@@ -43,9 +44,9 @@ variable "public_subnets" {
 variable "private_subnets" {
   description = "Mapa de subnets privadas a serem criadas"
   type = map(object({
-    name             = string
-    cidr_block       = string
-    az_index         = number
+    name              = string
+    cidr_block        = string
+    az_index          = number
     service_endpoints = optional(list(string), [])
     nsg_rules = optional(list(object({
       name                       = string
@@ -58,6 +59,7 @@ variable "private_subnets" {
       source_address_prefix      = string
       destination_address_prefix = string
     })), [])
+    enable_route_table = optional(bool, true)
   }))
   default = {}
 }

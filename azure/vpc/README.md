@@ -29,7 +29,6 @@ module "vpc" {
   
   enable_flow_log = true
   flow_log_retention_in_days = 30
-  flow_log_traffic_type     = "ALL"
 
   tags = {
     Environment = "Production"
@@ -51,7 +50,6 @@ module "vpc" {
 | enable_dns_support | Habilita suporte a DNS na VPC | `bool` | `true` | não |
 | enable_flow_log | Habilita Flow Logs para a VPC | `bool` | `false` | não |
 | flow_log_retention_in_days | Número de dias para retenção dos Flow Logs | `number` | `30` | não |
-| flow_log_traffic_type | Tipo de tráfego a ser registrado nos Flow Logs | `string` | `"ALL"` | não |
 | tags | Tags a serem aplicadas em todos os recursos | `map(string)` | `{}` | não |
 
 ## Outputs

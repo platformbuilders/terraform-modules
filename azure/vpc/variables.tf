@@ -49,16 +49,6 @@ variable "flow_log_retention_in_days" {
   default     = 30
 }
 
-variable "flow_log_traffic_type" {
-  description = "Tipo de tráfego a ser registrado nos Flow Logs (ACCEPT, REJECT, ALL)"
-  type        = string
-  default     = "ALL"
-  validation {
-    condition     = contains(["ACCEPT", "REJECT", "ALL"], var.flow_log_traffic_type)
-    error_message = "O tipo de tráfego deve ser ACCEPT, REJECT ou ALL."
-  }
-}
-
 variable "tags" {
   description = "Tags a serem aplicadas em todos os recursos"
   type        = map(string)
