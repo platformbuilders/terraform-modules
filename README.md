@@ -15,3 +15,29 @@ Este repositório tem o objetivo de padronizar a criação dos modulos para terr
 - [Subnet](gcp/subnet/README.md)
 - [Taxonomy](gcp/taxonomy/README.md)
 - [VPC](gcp/vpc/README.md)
+
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+No requirements.
+
+## Providers
+
+No providers.
+
+## Modules
+
+No modules.
+
+## Resources
+
+No resources.
+
+## Inputs
+
+No inputs.
+
+## Outputs
+
+No outputs.
+<!-- END_TF_DOCS -->
