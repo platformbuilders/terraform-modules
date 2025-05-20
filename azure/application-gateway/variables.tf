@@ -91,6 +91,7 @@ variable "request_routing_rules" {
     http_listener_name         = string
     backend_address_pool_name  = string
     backend_http_settings_name = string
+    redirect_to_ssl            = bool
   }))
 }
 
@@ -111,4 +112,13 @@ variable "tags" {
   description = "Tags para os recursos"
   type        = map(string)
   default     = {}
-} 
+}
+
+variable "ssl_certificates" {
+  description = "Lista de certificados SSL"
+  type = list(object({
+    name = string
+    data = string
+    password = string
+  }))
+}

@@ -15,7 +15,7 @@ resource "tls_private_key" "ssh" {
 }
 
 resource "azurerm_kubernetes_cluster" "main" {
-  location                            = coalesce(var.location, data.azurerm_resource_group.main.location)
+  location                            = var.location
   name                                = coalesce(var.cluster_name, trim("${var.prefix}-aks", "-"))
   resource_group_name                 = data.azurerm_resource_group.main.name
   automatic_upgrade_channel           = var.automatic_channel_upgrade
