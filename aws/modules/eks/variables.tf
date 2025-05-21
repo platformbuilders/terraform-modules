@@ -76,4 +76,26 @@ variable "eks_node_groups" {
     disk_size                  = number
     use_custom_launch_template = bool
   }))
-} 
+}
+
+variable "manage_aws_auth_configmap" {
+  description = "If true, the aws-auth configMap will be created and managed by this module. If false, the aws-auth configMap will not be created or managed."
+  default     = false
+}
+
+variable "enable_irsa" {
+  description = "Determines whether to create an OpenID Connect Provider for EKS to enable IRSA"
+  type        = bool
+  default     = false
+}
+
+variable "aws_auth_users" {
+  description = "Additional IAM users to add to the aws-auth configmap."
+  type        = list(any)
+  default     = []
+}
+
+variable "cloudwatch_log_group_retention_in_days" {
+  description = "Number of days to retain CloudWatch logs for EKS control plane"
+  default     = 7
+}

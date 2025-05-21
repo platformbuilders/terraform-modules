@@ -1,6 +1,7 @@
 resource "aws_elasticache_subnet_group" "this" {
   name       = var.name
   subnet_ids = concat(var.private_subnet_ids, var.public_subnet_ids)
+  tags = var.additional_tags
 }
 
 resource "aws_elasticache_replication_group" "default" {
