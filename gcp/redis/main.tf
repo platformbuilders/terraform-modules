@@ -23,6 +23,7 @@ resource "google_redis_instance" "cache" {
     google_service_networking_connection.private_service_connection,
     google_compute_global_address.service_range
   ]
+
   name                    = var.name
   project                 = var.project_id
   tier                    = var.tier
