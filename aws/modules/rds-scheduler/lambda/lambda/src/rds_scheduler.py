@@ -1,8 +1,5 @@
 import boto3
 import logging
-import os
-from datetime import datetime
-import pytz
 
 # Configure logging
 logger = logging.getLogger()
