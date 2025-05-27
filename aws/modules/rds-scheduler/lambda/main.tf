@@ -2,12 +2,6 @@ locals {
   lambda_zip_path = "${path.module}/lambda/lambda_function.zip"
 }
 
-# Create a data source that depends on the build script
-data "external" "lambda_build" {
-  program = ["bash", "${path.module}/lambda/lambda/build.sh"]
-  working_dir = "${path.module}/lambda/lambda"
-}
-
 resource "aws_lambda_function" "rds_scheduler" {
   filename         = local.lambda_zip_path
   function_name    = "rds-scheduler"
@@ -25,7 +19,6 @@ resource "aws_lambda_function" "rds_scheduler" {
     }
   }
 
-  depends_on = [data.external.lambda_build]
 }
 
 resource "aws_cloudwatch_log_group" "lambda_logs" {
