@@ -122,3 +122,9 @@ variable "ssl_certificates" {
     password = string
   }))
 }
+
+variable "firewall_policy_id" {
+  description = "ID da política de firewall"
+  type        = string
+  default     = ""
+}

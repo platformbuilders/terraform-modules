@@ -11,6 +11,9 @@ resource "azurerm_application_gateway" "app_gateway" {
   resource_group_name = var.resource_group_name
   location            = var.location
 
+  firewall_policy_id = var.firewall_policy_id
+  force_firewall_policy_association = length(var.firewall_policy_id) > 0 ? true : false
+
   sku {
     name     = var.sku_name
     tier     = var.sku_tier
