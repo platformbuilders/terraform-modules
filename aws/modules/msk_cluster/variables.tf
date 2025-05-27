@@ -77,5 +77,5 @@ variable "tags" {
 variable "kms_key_administrators" {
   description = "List of ARNs of IAM users or roles that can administer the KMS key"
   type        = list(string)
-  default     = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/kafka.amazonaws.com/AWSServiceRoleForKafka"]
+  default     = []
 }
