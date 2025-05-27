@@ -99,3 +99,15 @@ variable "cloudwatch_log_group_retention_in_days" {
   description = "Number of days to retain CloudWatch logs for EKS control plane"
   default     = 7
 }
+
+variable "authentication_mode" {
+  description = "Authentication mode for EKS cluster. Valid options are `CONFIG_MAP, API` and `API_AND_CONFIG_MAP`."
+  default     = "API_AND_CONFIG_MAP"
+  type        = string
+}
+
+variable "access_entries" {
+  description = "Map of access entries to add to the cluster"
+  type        = map(any)
+  default     = {}
+}
