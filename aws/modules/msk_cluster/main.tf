@@ -89,7 +89,7 @@ module "kms" {
   key_usage   = "ENCRYPT_DECRYPT"
 
   # Policy
-  key_administrators = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/kafka.amazonaws.com/AWSServiceRoleForKafka"]
+  key_administrators = var.kms_key_administrators
 
   # Aliases
   aliases                 = ["msk/${var.name}"]
