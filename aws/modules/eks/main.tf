@@ -2,7 +2,7 @@ data "aws_caller_identity" "current" {}
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "19.20.0"
+  version = "20.36.0"
 
   cluster_name    = "eks-${var.name}"
   cluster_version = var.eks_version
@@ -83,10 +83,9 @@ module "eks" {
       }
     }
   }
+  
+  authentication_mode = var.authentication_mode
+  
+  access_entries = var.access_entries
 
-  manage_aws_auth_configmap = var.manage_aws_auth_configmap
-
-  aws_auth_roles = var.additional_roles
-
-  aws_auth_users = var.aws_auth_users
 }

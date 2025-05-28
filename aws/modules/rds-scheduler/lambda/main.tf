@@ -2,7 +2,6 @@ locals {
   lambda_zip_path = "${path.module}/lambda/lambda_function.zip"
 }
 
-# TODO: Executar o script de build.sh para gerar o lambda_function.zip
 resource "aws_lambda_function" "rds_scheduler" {
   filename         = local.lambda_zip_path
   function_name    = "rds-scheduler"
@@ -19,6 +18,7 @@ resource "aws_lambda_function" "rds_scheduler" {
       TZ = "America/Sao_Paulo"
     }
   }
+
 }
 
 resource "aws_cloudwatch_log_group" "lambda_logs" {

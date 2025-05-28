@@ -29,7 +29,7 @@ resource "aws_iam_role_policy" "rds_scheduler_lambda_policy" {
           "rds:StopDBInstance",
           "rds:DescribeDBInstances"
         ]
-        Resource = [for instance in var.rds_instances : instance.instance_arn]
+        Resource = "arn:aws:rds:*:*:*"
       },
       {
         Effect = "Allow"

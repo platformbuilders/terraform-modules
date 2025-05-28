@@ -73,3 +73,9 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "kms_key_administrators" {
+  description = "List of ARNs of IAM users or roles that can administer the KMS key"
+  type        = list(string)
+  default     = []
+}

@@ -6,10 +6,10 @@ resource "aws_iam_user" "this" {
 
 
 resource "aws_iam_user_policy_attachment" "managed" {
-  for_each = var.managed_policy_arns != null ? toset(var.managed_policy_arns) : []
+  count = var.managed_policy_arns != null ? length(var.managed_policy_arns) : 0
   
   user       = aws_iam_user.this.name
-  policy_arn = each.value
+  policy_arn = var.managed_policy_arns[count.index]
 }
 
 resource "aws_iam_user_policy" "inline" {
