@@ -11,6 +11,9 @@ resource "azurerm_application_gateway" "app_gateway" {
   resource_group_name = var.resource_group_name
   location            = var.location
 
+  firewall_policy_id = var.firewall_policy_id
+  force_firewall_policy_association = length(var.firewall_policy_id) > 0 ? true : false
+
   sku {
     name     = var.sku_name
     tier     = var.sku_tier
@@ -67,6 +70,15 @@ resource "azurerm_application_gateway" "app_gateway" {
     }
   }
 
+  dynamic "ssl_certificate" {
+    for_each = var.ssl_certificates
+    content {
+      name = ssl_certificate.value.name
+      data = ssl_certificate.value.data
+      password = ssl_certificate.value.password
+    }
+  }
+
   dynamic "request_routing_rule" {
     for_each = var.request_routing_rules
     content {
@@ -76,6 +88,16 @@ resource "azurerm_application_gateway" "app_gateway" {
       http_listener_name         = request_routing_rule.value.http_listener_name
       backend_address_pool_name  = request_routing_rule.value.backend_address_pool_name
       backend_http_settings_name = request_routing_rule.value.backend_http_settings_name
+      redirect_configuration_name = request_routing_rule.value.redirect_to_ssl ? "ssl-redirect-config" : null
+    }
+  }
+
+  dynamic "redirect_configuration" {
+    for_each = length(var.ssl_certificates) > 0 ? [1] : []
+    content {
+      name = "ssl-redirect-config"
+      redirect_type = "Permanent"
+      target_listener_name = "https-listener"
     }
   }
 
@@ -89,6 +111,10 @@ resource "azurerm_application_gateway" "app_gateway" {
       interval            = probe.value.interval
       timeout             = probe.value.timeout
       unhealthy_threshold = probe.value.unhealthy_threshold
+
+      match {
+        status_code = ["200-399"]
+      }
     }
   }
 
